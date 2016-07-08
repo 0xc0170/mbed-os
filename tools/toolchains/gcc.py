@@ -55,17 +55,19 @@ class GCC(mbedToolchain):
         if target.core.startswith("Cortex"):
             self.cpu.append("-mthumb")
 
-        if target.core == "Cortex-M4" and target.fpu == "single":
+        # FPU handling, M7 possibly to have double FPU
+        if target.core == "Cortex-M4F":
             self.cpu.append("-mfpu=fpv4-sp-d16")
             self.cpu.append("-mfloat-abi=softfp")
+        elif target.core == "Cortex-M7F":
+            if target.fpu == "double":
+                self.cpu.append("-mfpu=fpv5-d16")
+                self.cpu.append("-mfloat-abi=softfp")
+            else:
+                self.cpu.append("-mfpu=fpv5-sp-d16")
+                self.cpu.append("-mfloat-abi=softfp")
 
-        elif target.core == "Cortex-M7" and target.fpu == "single":
-            self.cpu.append("-mfpu=fpv5-sp-d16")
-            self.cpu.append("-mfloat-abi=softfp")
 
-        elif target.core == "Cortex-M7" and target.fpu == "double":
-            self.cpu.append("-mfpu=fpv5-d16")
-            self.cpu.append("-mfloat-abi=softfp")
 
         if target.core == "Cortex-A9":
             self.cpu.append("-mthumb-interwork")

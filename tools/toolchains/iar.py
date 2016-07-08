@@ -51,7 +51,7 @@ class IAR(mbedToolchain):
         # flags_cmd are used only by our scripts, the project files have them already defined,
         # using this flags results in the errors (duplication)
         # asm accepts --cpu Core or --fpu FPU, not like c/c++ --cpu=Core
-        if target.core == "Cortex-M4" and target.fpu == "single":
+        if target.core == "Cortex-M4F":
           asm_flags_cmd = [
               "--cpu", "Cortex-M4F"
           ]
@@ -60,7 +60,7 @@ class IAR(mbedToolchain):
               "--cpu", cpuchoice
           ]
         # custom c flags
-        if target.core == "Cortex-M4" and target.fpu == "single":
+        if target.core == "Cortex-M4F":
           c_flags_cmd = [
               "--cpu", "Cortex-M4F",
               "--thumb", "--dlib_config", join(IAR_PATH, "inc", "c", "DLib_Config_Full.h")
@@ -74,12 +74,13 @@ class IAR(mbedToolchain):
         cxx_flags_cmd = [
             "--c++", "--no_rtti", "--no_exceptions"
         ]
-        if target.core == "Cortex-M7" and target.fpu == "single":
-            asm_flags_cmd += ["--fpu", "VFPv5_sp"]
-            c_flags_cmd.append("--fpu=VFPv5_sp")
-        if target.core == "Cortex-M7" and target.fpu == "double":
-            asm_flags_cmd += ["--fpu", "VFPv5"]
-            c_flags_cmd.append("--fpu=VFPv5")
+        if target.core == "Cortex-M7F":
+            if target.fpu == "double":
+                asm_flags_cmd += ["--fpu", "VFPv5"]
+                c_flags_cmd.append("--fpu=VFPv5")
+            else:
+                asm_flags_cmd += ["--fpu", "VFPv5_sp"]
+                c_flags_cmd.append("--fpu=VFPv5_sp")
 
         if "debug-info" in self.options:
             c_flags_cmd.append("-r")
