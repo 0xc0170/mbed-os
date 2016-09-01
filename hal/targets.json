@@ -1168,6 +1168,7 @@
         "core": "Cortex-M4F",
         "default_toolchain": "uARM",
         "supported_toolchains": ["ARM", "uARM", "GCC_ARM", "IAR"],
+        "progen": {"target": "odin-w2"},
         "extra_labels": ["STM", "STM32F4", "STM32F439", "STM32F439ZI"],
         "macros": ["HSE_VALUE=24000000", "HSE_STARTUP_TIMEOUT=5000"],
         "inherits": ["Target"],
