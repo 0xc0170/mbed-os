@@ -193,6 +193,13 @@ typedef enum {
     SWCLK   = PA_14, 
     NTRST   = PB_4,  
 
+    USBRX  = PD_9,
+    USBTX  = PD_8,
+
+    LED1 = LED_RED,
+    LED2 = LED_GRE,
+    LED3 = LED_BLU,
+
     // Not connected
     NC = (int)0xFFFFFFFF
 } PinName;
