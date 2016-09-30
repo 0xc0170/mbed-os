@@ -424,7 +424,7 @@ int lwip_bringup(emac_interface_t *emac, bool dhcp, const char *ip, const char *
 #endif /* LWIP_IPV6_AUTOCONFIG */
 
 #endif
-
+#if !DEVICE_EMAC
     u32_t ret;
 
     if (!netif_is_link_up(&lwip_netif)) {
@@ -434,9 +434,9 @@ int lwip_bringup(emac_interface_t *emac, bool dhcp, const char *ip, const char *
             return NSAPI_ERROR_NO_CONNECTION;
         }
     }
-
+#endif
 #if LWIP_IPV4
-    if (!dhcp) {
+    if (!dhcp && ip != NULL) {
         ip4_addr_t ip_addr;
         ip4_addr_t netmask_addr;
         ip4_addr_t gw_addr;
