@@ -1005,6 +1005,7 @@
         "extra_labels": ["STM", "STM32F7", "STM32F756", "STM32F756xG", "STM32F756ZG"],
         "supported_toolchains": ["ARM", "uARM", "GCC_ARM", "IAR"],
         "default_toolchain": "ARM",
+        "macros": ["TRANSACTION_QUEUE_SIZE_SPI=2", "USBHOST_OTHER", "MBEDTLS_CONFIG_HW_SUPPORT"],
         "config": {
             "d11_configuration": {
                 "help": "Value: PA_7 for the default board configuration, PB_5 in case of solder bridge update (SB121 off/ SB122 on)",
