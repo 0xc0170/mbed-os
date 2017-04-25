@@ -56,7 +56,7 @@ MBED_RPC = join(LIB_DIR, "rpc")
 RPC_LIBRARY = join(BUILD_DIR, "rpc")
 
 # mbed RTOS
-RTOS = join(ROOT, "rtos")
+RTOS = join(LIB_DIR, "rtos")
 MBED_RTX = join(RTOS, "rtx")
 
 RTOS_LIBRARIES = join(BUILD_DIR, "rtos")
