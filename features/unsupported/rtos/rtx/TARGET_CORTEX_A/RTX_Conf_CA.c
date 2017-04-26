@@ -44,7 +44,7 @@
 #endif
 
 // Include per-target RTX config file
-#include "mbed_rtx.h"
+#include "mbed_rtx1.h"
 
 //-------- <<< Use Configuration Wizard in Context Menu >>> -----------------
 //
