@@ -18,6 +18,7 @@ CMSIS_5/CMSIS/Core/Include/cmsis_compiler.h | mbed-os/cmsis/ | Toolchain generic
 CMSIS_5/CMSIS/Core/Include/cmsis_{armcc,armclang,gcc}.h | mbed-os/cmsis/TOOLCHAIN_{ARM,GCC}/ | Toolchain specific code |
 CMSIS_5/CMSIS/RTOS2/Include/cmsis_os2.h | mbed-os/rtos/rtx2/TARGET_CORTEX_M/ | RTX main header |
 CMSIS_5/CMSIS/RTOS2/RTX/Config/ | mbed-os/rtos/rtx2/TARGET_CORTEX_M/ | RTX configuration files |
+CMSIS_5/CMSIS/RTOS2/RTX/Include1/ | mbed-os/rtos/rtx/ | RTOS1 compatibility layer |
 CMSIS_5/CMSIS/RTOS2/RTX/Include/ | mbed-os/rtos/rtx2/TARGET_CORTEX_M/ | RTX definitions |
 CMSIS_5/CMSIS/RTOS2/RTX/Source/rtx_* | mbed-os/rtos/rtx2/TARGET_CORTEX_M/ | RTX sources |
 CMSIS_5/CMSIS/RTOS2/RTX/Source/svc_user.c | mbed-os/rtos/rtx2/TARGET_CORTEX_M/ | RTX SVC user table |
@@ -40,6 +41,7 @@ arm_math.h | Rename `PI` to `_PI` to avoid name clash with a register name in mc
 Filename | Description |
 ---------|-------------|
 cmsis_os2.h | Doxygen added; added per-thread uVisor context |
+cmsis_os1.h | Change `osThreadDef` to accept 3 parameters, rather than 4, and be not static as expected by mbed OS |
 core_cm.h | Doxygen added; included headers changed to match mbed OS core selection; deferred priority setting of SVCall to uVisor, when uVisor is enabled |
 RTX_Config.h | Doxygen added, mbed OS RTX config included |
 rtx_evr.c | CMSIS component definition include removed |
