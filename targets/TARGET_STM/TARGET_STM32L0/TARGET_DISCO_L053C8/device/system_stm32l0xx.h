@@ -1,14 +1,14 @@
 /**
   ******************************************************************************
-  * @file    system_stm32l0xx.h
+  * @file    system_stm32f4xx.h
   * @author  MCD Application Team
-  * @version V1.7.0
-  * @date    31-May-2016
-  * @brief   CMSIS Cortex-M0+ Device Peripheral Access Layer System Header File.
-  ******************************************************************************
+  * @version V2.6.1
+  * @date    14-February-2017
+  * @brief   CMSIS Cortex-M4 Device System Source File for STM32F4xx devices.       
+  ******************************************************************************  
   * @attention
   *
-  * <h2><center>&copy; COPYRIGHT(c) 2015 STMicroelectronics</center></h2>
+  * <h2><center>&copy; COPYRIGHT(c) 2017 STMicroelectronics</center></h2>
   *
   * Redistribution and use in source and binary forms, with or without modification,
   * are permitted provided that the following conditions are met:
@@ -32,28 +32,28 @@
   * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
   * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
   *
-  ******************************************************************************
-  */
+  ******************************************************************************  
+  */ 
 
 /** @addtogroup CMSIS
   * @{
   */
 
-/** @addtogroup stm32l0xx_system
+/** @addtogroup stm32f4xx_system
   * @{
   */  
   
 /**
   * @brief Define to prevent recursive inclusion
   */
-#ifndef __SYSTEM_STM32L0XX_H
-#define __SYSTEM_STM32L0XX_H
+#ifndef __SYSTEM_STM32F4XX_H
+#define __SYSTEM_STM32F4XX_H
 
 #ifdef __cplusplus
  extern "C" {
 #endif 
 
-/** @addtogroup STM32L0xx_System_Includes
+/** @addtogroup STM32F4xx_System_Includes
   * @{
   */
 
@@ -62,7 +62,7 @@
   */
 
 
-/** @addtogroup STM32L0xx_System_Exported_types
+/** @addtogroup STM32F4xx_System_Exported_types
   * @{
   */
   /* This variable is updated in three ways:
@@ -74,17 +74,15 @@
                variable is updated automatically.
   */
 extern uint32_t SystemCoreClock;          /*!< System Clock Frequency (Core Clock) */
-/*
-*/
-extern const uint8_t AHBPrescTable[16];   /*!< AHB prescalers table values */
-extern const uint8_t APBPrescTable[8];    /*!< APB prescalers table values */
-extern const uint8_t PLLMulTable[9];      /*!< PLL multipiers table values */
+
+extern const uint8_t  AHBPrescTable[16];    /*!< AHB prescalers table values */
+extern const uint8_t  APBPrescTable[8];     /*!< APB prescalers table values */
 
 /**
   * @}
   */
 
-/** @addtogroup STM32L0xx_System_Exported_Constants
+/** @addtogroup STM32F4xx_System_Exported_Constants
   * @{
   */
 
@@ -92,7 +90,7 @@ extern const uint8_t PLLMulTable[9];      /*!< PLL multipiers table values */
   * @}
   */
 
-/** @addtogroup STM32L0xx_System_Exported_Macros
+/** @addtogroup STM32F4xx_System_Exported_Macros
   * @{
   */
 
@@ -100,14 +98,13 @@ extern const uint8_t PLLMulTable[9];      /*!< PLL multipiers table values */
   * @}
   */
 
-/** @addtogroup STM32L0xx_System_Exported_Functions
+/** @addtogroup STM32F4xx_System_Exported_Functions
   * @{
   */
   
 extern void SystemInit(void);
 extern void SystemCoreClockUpdate(void);
 extern void SetSysClock(void);
-
 /**
   * @}
   */
@@ -116,7 +113,7 @@ extern void SetSysClock(void);
 }
 #endif
 
-#endif /*__SYSTEM_STM32L0XX_H */
+#endif /*__SYSTEM_STM32F4XX_H */
 
 /**
   * @}
