@@ -58,34 +58,13 @@ void ticker_callback_0(void) {
 }
 
 void ticker_callback_1_led(void) {
+    ++callback_trigger_count;
     led1 = !led1;
 }
 
 void ticker_callback_2_led(void) {
+    ++callback_trigger_count;
     led2 = !led2;
-}
-
-void ticker_callback_1_switch_to_2(void) {
-    ++callback_trigger_count;
-    ticker1->detach();
-    ticker1->attach_us(ticker_callback_2_switch_to_1, ONE_MILLI_SEC);
-    ticker_callback_1_led();
-}
-
-void ticker_callback_2_switch_to_1(void) {
-    ++callback_trigger_count;
-    ticker2->detach();
-    ticker2->attach_us(ticker_callback_1_switch_to_2, ONE_MILLI_SEC);
-    ticker_callback_2_led();
-}
-
-void wait_and_print() {
-    while (ticker_count <= total_ticks) {
-        if (print_tick) {
-            print_tick = false;
-            greentea_send_kv("tick", ticker_count++);
-        }
-    }
 }
 
 void test_case_1x_ticker() {
@@ -122,7 +101,9 @@ void test_case_2x_callbacks() {
     callback_trigger_count = 0;
 
     greentea_send_kv("timing_drift_check_start", 0);
-    ticker1->attach_us(ticker_callback_1_switch_to_2, ONE_MILLI_SEC);
+    ticker1->attach_us(&ticker_callback_2_led, 2*ONE_MILLI_SEC);
+    wait_us(1000);
+    ticker2->attach_us(&ticker_callback_1_led, 2*ONE_MILLI_SEC);
 
     // wait for 1st signal from host
     greentea_parse_kv(_key, _value, sizeof(_key), sizeof(_value));
