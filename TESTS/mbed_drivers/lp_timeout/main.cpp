@@ -49,9 +49,16 @@ void lp_timeout_1s_deepsleep(void)
 
      * This should be replaced with a better function that checks if the
      * hardware buffers are empty. However, such an API does not exist now,
-     * so we'll use the wait_ms() function for now.
+     * so we'll use the Timer for now.
      */
-    wait_ms(10);
+    {
+        Timer timer;
+        timer.start();
+        int start = timer.read_ms();
+        int end = start + 10;
+        while (timer.read_ms() < end) {
+        }
+    }
 
     /*
      * We use here lp_ticker_read() instead of us_ticker_read() for start and

@@ -78,9 +78,16 @@ void lp_ticker_1s_deepsleep()
 
      * This should be replaced with a better function that checks if the
      * hardware buffers are empty. However, such an API does not exist now,
-     * so we'll use the wait_ms() function for now.
+     * so we'll use the Timer for now.
      */
-    wait_ms(10);
+    {
+        Timer timer;
+        timer.start();
+        int start = timer.read_ms();
+        int end = start + 10;
+        while (timer.read_ms() < end) {
+        }
+    }
 
     ticker_set_handler(lp_ticker_data, cb_done_deepsleep);
     ticker_remove_event(lp_ticker_data, &delay_event);
