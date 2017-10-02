@@ -137,10 +137,10 @@ static uint32_t get_current_time(void)
         __DMB();
 
     	uc1 = *ucptr;												// Read Upper_count
-    	
+
     	tmrpend1 = NVIC_GetPendingIRQ(adi_tmr_interrupt[ADI_TMR_DEVICE_GP1]);
     				// Check for a pending interrupt again.  Only leave loop if they match
-    	
+
         NVIC_EnableIRQ(adi_tmr_interrupt[ADI_TMR_DEVICE_GP1]);		// enable interrupt on every loop to allow TMR1 interrupt to run
     } while ((tmrcnt0 != tmrcnt1) || (tmrpend0 != tmrpend1));
 
@@ -171,23 +171,23 @@ static void calc_event_counts(uint32_t timestamp)
 	uint64_t aa;
 
     calc_time = get_current_time();
-    offset = timestamp - calc_time;             // offset in useconds
+    offset = timestamp - calc_time; // offset in useconds
 
-    if (offset > 0xf0000000u)					// if offset is a really big number, assume that timer has already expired (i.e. negative)
+    if (offset > 0xf0000000u)       // if offset is a really big number, assume that timer has already expired (i.e. negative)
     	offset = 0u;
 
-    if (offset > 10u) {							// it takes 10us to user timer routine after interrupt.  Offset timer to account for that.
+    if (offset > 10u) {             // it takes 10us to user timer routine after interrupt.  Offset timer to account for that.
     	offset -= 10u;
     } else
     	offset = 0u;
 
     aa = (uint64_t) offset;
-    aa *= 26u;									// convert from 1MHz to 26MHz clock. todo scale for other clock freqs
+    aa *= 26u;                      // convert from 1MHz to 26MHz clock. todo scale for other clock freqs
 
     blocks = aa >> 7;
-    blocks++;                                   // round
+    blocks++;                       // round
 
-	largecnt = blocks>>1;                       // communicate to event_timer() routine
+	largecnt = blocks>>1;           // communicate to event_timer() routine
 }
 
 static void event_timer()
@@ -309,7 +309,7 @@ uint32_t us_ticker_read()
 
 void us_ticker_disable_interrupt(void)
 {
-    adi_tmr_Enable(ADI_TMR_DEVICE_GP2, false);    
+    adi_tmr_Enable(ADI_TMR_DEVICE_GP2, false);
 }
 
 void us_ticker_clear_interrupt(void)
