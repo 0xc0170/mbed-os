@@ -45,6 +45,7 @@
 #include <drivers/pwr/adi_pwr.h>
 #include "cmsis.h"
 #include "trng_api.h"
+#include "objects.h"
 
 // Sampling counter values
 // Prescaler: 0 - 10
@@ -52,43 +53,58 @@
 #define TRNG_CNT_VAL	4095
 #define TRNG_PRESCALER 	2
 
-/* RNG Device Handle */
-static ADI_RNG_HANDLE     RNGhDevice;                     /* Memory to handle CRC Device */
-static uint8_t            RngDevMem[ADI_RNG_MEMORY_SIZE]; /* Data buffers for Random numbers */
+/* RNG Device memory */
+static uint8_t RngDevMem[ADI_RNG_MEMORY_SIZE];
 
 void trng_init(trng_t *obj)
 {
-    (void)obj;
-    adi_rng_Open(0,RngDevMem,sizeof(RngDevMem),&RNGhDevice);
+	ADI_RNG_HANDLE RNGhDevice;
 
-    // Set sample length for the H/W RN accumulator
-    adi_rng_SetSampleLen(RNGhDevice, TRNG_PRESCALER, TRNG_CNT_VAL);
+	// Open the device
+	adi_rng_Open(0,RngDevMem,sizeof(RngDevMem),&RNGhDevice);
 
-    // Enable the RNG
-    adi_rng_Enable(RNGhDevice, true);
+	// Set sample length for the H/W RN accumulator
+	adi_rng_SetSampleLen(RNGhDevice, TRNG_PRESCALER, TRNG_CNT_VAL);
+
+	// Disable buffering - single byte generation only
+	adi_rng_EnableBuffering(RNGhDevice, false);
+
+	// Enable the TRNG
+	adi_rng_Enable(RNGhDevice, true);
+
+	// Save device handle
+	obj->RNGhDevice = RNGhDevice;
 }
 
 void trng_free(trng_t *obj)
 {
-    (void)obj;
+    ADI_RNG_HANDLE RNGhDevice = obj->RNGhDevice;
+
     adi_rng_Enable(RNGhDevice, false);
     adi_rng_Close(RNGhDevice);
 }
 
 int trng_get_bytes(trng_t *obj, uint8_t *output, size_t length, size_t *output_length)
 {
-    (void)obj;
+    ADI_RNG_HANDLE RNGhDevice = obj->RNGhDevice;
     bool bRNGRdy;
     uint32_t nRandomNum, i;
 
-    for (i = 0; i < length; ) {
-        adi_rng_GetRdyStatus(RNGhDevice, &bRNGRdy);
-        if (bRNGRdy) {
-            adi_rng_GetRngData(RNGhDevice, &nRandomNum);
-            output[i++] = (uint8_t) nRandomNum;
-        }
+    for (i = 0; i < length; i++) {
+        // Loop until the device has data to be read
+        do {
+        	adi_rng_GetRdyStatus(RNGhDevice, &bRNGRdy);
+        } while (!bRNGRdy);
+
+        // Read the RNG
+        adi_rng_GetRngData(RNGhDevice, &nRandomNum);
+
+        // Save the output        
+		output[i] = (uint8_t)nRandomNum;
     }
+
     *output_length = length;
+
     return 0;
 }
 
