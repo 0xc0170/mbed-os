@@ -129,15 +129,6 @@ static void rtc1_Callback (void *pCBParam, uint32_t nEvent, void *EventArg)
 }
 
 
-/** Get low power ticker's data
- *
- * @return The low power ticker data
- */
-/*
-const ticker_data_t* get_lp_ticker_data()
-{
-}*/
-
 
 /* HAL lp ticker */
 

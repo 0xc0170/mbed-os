@@ -224,8 +224,9 @@ static void GP2CallbackFunction(void *pCBParam, uint32_t Event, void  * pArg)
 {
    	if (largecnt >= 65536u) {
    		largecnt -= 65536u;
-   	} else
+   	} else {
    		largecnt = 0;
+    }
 
    	if (largecnt < 65536u) {
        	adi_tmr_Enable(ADI_TMR_DEVICE_GP2, false);

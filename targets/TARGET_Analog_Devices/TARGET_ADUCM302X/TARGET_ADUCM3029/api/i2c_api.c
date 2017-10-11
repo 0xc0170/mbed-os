@@ -74,7 +74,7 @@ void i2c_init(i2c_t *obj, PinName sda, PinName scl)
     ADI_I2C_HANDLE  *pI2C_Handle;
     uint8_t         *I2C_Mem;
     ADI_I2C_RESULT  I2C_Return = ADI_I2C_SUCCESS;
-    uint32_t        I2C_DevNum = I2C_0;
+    uint32_t        I2C_DevNum = I2C_0;     /* ADuCM3029 only has 1 I2C port */
 
 
 #if defined(BUILD_I2C_MI_DYNAMIC)
@@ -110,13 +110,15 @@ void i2c_init(i2c_t *obj, PinName sda, PinName scl)
 
 int i2c_start(i2c_t *obj)
 {
-    return 0;
+    /* The Hardware does not support this feature. */
+    return -1;
 }
 
 
 int i2c_stop(i2c_t *obj)
 {
-    return 0;
+    /* The Hardware does not support this feature. */
+    return -1;
 }
 
 
@@ -124,6 +126,7 @@ void i2c_frequency(i2c_t *obj, int hz)
 {
     ADI_I2C_HANDLE  I2C_Handle;
     ADI_I2C_RESULT  I2C_Return = ADI_I2C_SUCCESS;
+
 
     I2C_Handle = *obj->pI2C_Handle;
     I2C_Return = adi_i2c_SetBitRate(I2C_Handle, (uint32_t) hz);
@@ -203,13 +206,15 @@ void i2c_reset(i2c_t *obj)
 
 int i2c_byte_read(i2c_t *obj, int last)
 {
-    return 0;
+    /* The Hardware does not support this feature. */
+    return -1;
 }
 
 
 int i2c_byte_write(i2c_t *obj, int data)
 {
-    return 0;
+    /* The Hardware does not support this feature. */
+    return -1;
 }
 
 #endif  // #if DEVICE_I2C

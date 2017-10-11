@@ -61,8 +61,8 @@ static uint32_t serial_irq_ids[2] = {0};
 static uart_irq_handler irq_handler = NULL;
 int stdio_uart_inited = 0;
 serial_t stdio_uart;
-int rxbuffer[1];
-int txbuffer[1];
+static int rxbuffer[1];
+static int txbuffer[1];
 
 static void uart_callback(void *pCBParam, uint32_t Event, void *pArg)
 {
