@@ -50,6 +50,7 @@ POSSIBILITY OF SUCH DAMAGE.
 
  /*! \cond PRIVATE */
 
+#include <adi_processor.h>
 #include "adi_flash_def.h"
 #include "adi_flash_config.h"
 
@@ -73,18 +74,18 @@ static ADI_FEE_CONFIG gConfigInfo[ADI_FEE_NUM_INSTANCES] =
 {
     /* the one-and-only (so far) instance data for FEE0... */
     {
-#if defined (__ADUCM4x50__)      
+#if defined (__ADUCM4x50__)
         /* ECC interrupt enable settings (IEN register) */
         ( (ADI_FEE_CFG_ECC_ERROR_RESPONSE      << BITP_FLCC_IEN_ECC_ERROR)
         | (ADI_FEE_CFG_ECC_CORRECTION_RESPONSE << BITP_FLCC_IEN_ECC_CORRECT)
         ),
-				
-#elif defined (__ADUCM302x__)        
-        
+
+#elif defined (__ADUCM302x__)
+
         /* ECC interrupt enable settings (IEN register) */
         ( (ADI_FEE_CFG_ECC_ERROR_RESPONSE      << BITP_FLCC_IEN_ECC_ERROR)),
-		
-#endif        
+
+#endif
         /* timing parameter settings (TIME_PARAM0 register) */
         ( (ADI_FEE_CFG_PARAM0_TNVH1            << BITP_FLCC_TIME_PARAM0_TNVH1)
         | (ADI_FEE_CFG_PARAM0_TERASE           << BITP_FLCC_TIME_PARAM0_TERASE)
@@ -95,17 +96,17 @@ static ADI_FEE_CONFIG gConfigInfo[ADI_FEE_NUM_INSTANCES] =
         | (ADI_FEE_CFG_PARAM0_TNVS             << BITP_FLCC_TIME_PARAM0_TNVS)
         | (ADI_FEE_CFG_PARAM0_CLKDIV           << BITP_FLCC_TIME_PARAM0_DIVREFCLK)
         ),
-#if defined (__ADUCM4x50__) 
+#if defined (__ADUCM4x50__)
             /* more timing parameter settings (TIME_PARAM1 register) */
         ( (ADI_FEE_CFG_PARAM1_WAITESTATES      << BITP_FLCC_TIME_PARAM1_WAITSTATES)
         | (ADI_FEE_CFG_PARAM1_TWK              << BITP_FLCC_TIME_PARAM1_TWK)
         ),
-		
-#elif defined (__ADUCM302x__) 
+
+#elif defined (__ADUCM302x__)
         /* more timing parameter settings (TIME_PARAM1 register) */
         ((ADI_FEE_CFG_PARAM1_TWK              << BITP_FLCC_TIME_PARAM1_TWK)),
-		
-#endif          
+
+#endif
         /* system interrupt abort enables (ABORT_EN_XX registers) */
         (ADI_FEE_CFG_ABORT_EN_LO),
         (ADI_FEE_CFG_ABORT_EN_HI),

@@ -49,6 +49,7 @@ POSSIBILITY OF SUCH DAMAGE.
 
  /*! \cond PRIVATE */
 
+#include <adi_processor.h>
 #include "adi_i2c_def.h"
 #include "adi_i2c_config.h"
 

@@ -1,6 +1,7 @@
 #ifndef ADI_ADC_DATA_C
 #define ADI_ADC_DATA_C
 
+#include <adi_processor.h>
 #include <drivers/adc/adi_adc.h>
 #include <drivers/dma/adi_dma.h>
 #include "adi_adc_def.h"
