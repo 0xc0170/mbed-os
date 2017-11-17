@@ -80,8 +80,7 @@ void COMMON_RTC_IRQ_HANDLER(void)
     if (m_common_sw_irq_flag & US_TICKER_SW_IRQ_MASK) {
         m_common_sw_irq_flag &= ~US_TICKER_SW_IRQ_MASK;
         us_ticker_irq_handler();
-    }
-    if (nrf_rtc_event_pending(COMMON_RTC_INSTANCE, US_TICKER_EVENT)) {
+    } else if (nrf_rtc_event_pending(COMMON_RTC_INSTANCE, US_TICKER_EVENT)) {
         us_ticker_irq_handler();
     }
 
@@ -284,10 +283,11 @@ void us_ticker_set_interrupt(timestamp_t timestamp)
 
 void us_ticker_fire_interrupt(void)
 {
-    core_util_critical_section_enter();
+    uint32_t closest_safe_compare = common_rtc_32bit_ticks_get() + 2;
+
     m_common_sw_irq_flag |= US_TICKER_SW_IRQ_MASK;
-    NVIC_SetPendingIRQ(RTC1_IRQn);
-    core_util_critical_section_exit();
+    nrf_rtc_cc_set(COMMON_RTC_INSTANCE, LP_TICKER_CC_CHANNEL, RTC_WRAP(closest_safe_compare));
+    nrf_rtc_event_enable(COMMON_RTC_INSTANCE, LP_TICKER_INT_MASK);
 }
 
 void us_ticker_disable_interrupt(void)

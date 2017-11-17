@@ -38,10 +38,10 @@ void lp_ticker_set_interrupt(timestamp_t timestamp)
 
 void lp_ticker_fire_interrupt(void)
 {
-    core_util_critical_section_enter();
+    uint32_t closest_safe_compare = common_rtc_32bit_ticks_get() + 2;
     m_common_sw_irq_flag |= LP_TICKER_SW_IRQ_MASK;
-    NVIC_SetPendingIRQ(RTC1_IRQn);
-    core_util_critical_section_exit();
+    nrf_rtc_cc_set(COMMON_RTC_INSTANCE, LP_TICKER_CC_CHANNEL, RTC_WRAP(closest_safe_compare));
+    nrf_rtc_event_enable(COMMON_RTC_INSTANCE, LP_TICKER_INT_MASK);
 }
 
 void lp_ticker_disable_interrupt(void)
