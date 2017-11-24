@@ -1,0 +1,112 @@
+[
+    {
+        "folders": ["platform"],
+        "owners": ["SenRamakri", "c1728p9", "geky"]
+    },
+
+    {
+        "folders": ["drivers"],
+        "owners": ["bulislaw", "c1728p9", "pan-", "scartmell-arm", "SenRamakri"]
+    },
+
+    {
+        "folders": ["tools"],
+        "owners": ["theotherjimmy"]
+    },
+
+    {
+        "folders": ["hal"],
+        "owners": ["bulislaw", "c1728p9", "pan-", "scartmell-arm"]
+    },
+
+    {
+        "folders": ["features/FEATURE_BLE"],
+        "owners": ["pan-"]
+    },
+
+    {
+        "folders": ["features/FEATURE_LWIP", "features/netsocket", "features/nanostack"],
+        "owners": ["SeppoTakalo", "kjbracey-arm"]
+    },
+
+    {
+        "folders": ["features/filesystem", "features/storage"],
+        "owners": ["geky", "deepikabhavnani"]
+    },
+
+    {
+        "folders": ["features/mbedtls"],
+        "owners": ["hanno-arm", "RonEld", "mazimkhan"]
+    },
+
+    {
+        "folders": ["targets/TARGET_Analog_Devices"],
+        "owners": ["ARMmbed/team-analogdevices"]
+    },
+
+    {
+        "folders": ["targets/TARGET_ARM_SSG"],
+        "owners": ["ARMmbed/team-arm-ipg-oss"]
+    },
+
+    {
+        "folders": ["targets/TARGET_Freescale", "targets/TARGET_NXP"],
+        "owners": ["ARMmbed/team-nxp"]
+    },
+
+    {
+        "folders": ["targets/TARGET_Maxim"],
+        "owners": ["ARMmbed/team-maximintegrated"]
+    },
+
+    {
+        "folders": ["targets/TARGET_NORDIC"],
+        "owners": ["ARMmbed/team-nordic"]
+    },
+
+    {
+        "folders": ["targets/TARGET_NUVOTON"],
+        "owners": ["ARMmbed/team-nuvoton"]
+    },
+
+    {
+        "folders": ["targets/TARGET_ONSEMI"],
+        "owners": ["ARMmbed/team-onsemi"]
+    },
+
+    {
+        "folders": ["targets/TARGET_Realtek"],
+        "owners": ["ARMmbed/team-realtek"]
+    },
+
+    {
+        "folders": ["targets/TARGET_RENESAS"],
+        "owners": ["ARMmbed/team-renesas"]
+    },
+
+    {
+        "folders": ["targets/TARGET_Silicon_Labs"],
+        "owners": ["ARMmbed/team-silabs"]
+    },
+
+    {
+        "folders": ["targets/TARGET_STM"],
+        "owners": ["ARMmbed/team-st-mcd"]
+    },
+
+    {
+        "folders": ["targets/TARGET_TOSHIBA"],
+        "owners": ["ganesh-ramachandran"]
+    },
+
+    {
+        "folders": ["targets/TARGET_ublox"],
+        "owners": ["ARMmbed/team-nuvoton"]
+    },
+
+    {
+        "folders": ["targets/TARGET_WIZNET"],
+        "owners": ["khj098765"]
+    },
+
+]
