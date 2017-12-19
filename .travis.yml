@@ -178,5 +178,5 @@ matrix:
       script:
         # Run local mbed 2 testing
         # Note: These take ~40 minutes to run
-        - python2 -u tools/build_travis.py | sed -n '/^Executing/p'
+        - travis_wait 20 python2 -u tools/build_travis.py | sed -n '/^Executing/p'
 
