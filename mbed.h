@@ -16,6 +16,8 @@
 #ifndef MBED_H
 #define MBED_H
 
+#define test 1
+
 #if MBED_CONF_RTOS_PRESENT
 #include "rtos/rtos.h"
 #endif
