@@ -527,8 +527,7 @@
 /**
  * TX configuration parameters.
  */
-typedef struct
-{
+typedef struct {
     /**
      * The TX channel.
      */
@@ -559,12 +558,11 @@ typedef struct
  * This structure contains parameters for ADR request coming from
  * network server.
  */
-typedef struct
-{
+typedef struct {
     /*!
      * A pointer to the payload containing the MAC commands.
      */
-    const uint8_t* payload;
+    const uint8_t *payload;
     /*!
      * The size of the payload.
      */
@@ -594,8 +592,7 @@ typedef struct
 /**
  * Structure containing data for local ADR settings
  */
-typedef struct link_adr_params_s
-{
+typedef struct link_adr_params_s {
     /**
      * The number of repetitions.
      */
@@ -622,8 +619,7 @@ typedef struct link_adr_params_s
  * Structure used to store ADR values received from network
  * for verification (legality) purposes.
  */
-typedef struct verify_adr_params_s
-{
+typedef struct verify_adr_params_s {
     /*!
      * The current status of the AdrLinkRequest.
      */
@@ -660,15 +656,14 @@ typedef struct verify_adr_params_s
     /*!
      * A pointer to the first element of the channels mask.
      */
-    uint16_t* channel_mask;
+    uint16_t *channel_mask;
 } verify_adr_params_t;
 
 /**
  * Contains rx parameter setup request coming from
  * network server.
  */
-typedef struct rx_param_setup_req_s
-{
+typedef struct rx_param_setup_req_s {
     /**
      * The datarate to set up.
      */
@@ -686,8 +681,7 @@ typedef struct rx_param_setup_req_s
 /**
  * The parameter structure for the function RegionNextChannel.
  */
-typedef struct channel_selection_params_s
-{
+typedef struct channel_selection_params_s {
     /**
      * The aggregated time-off time.
      */
@@ -713,8 +707,7 @@ typedef struct channel_selection_params_s
 /*!
  * The parameter structure for the function RegionContinuousWave.
  */
-typedef struct continuous_wave_mode_params_s
-{
+typedef struct continuous_wave_mode_params_s {
     /*!
      * The current channel index.
      */

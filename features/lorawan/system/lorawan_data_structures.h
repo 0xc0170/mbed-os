@@ -76,8 +76,8 @@ typedef uint32_t lorawan_time_t;
  */
 // reject if user tries to set more than MTU
 #if MBED_CONF_LORA_TX_MAX_SIZE > 255
-    #warning "Cannot set TX Max size more than MTU=255"
-    #define MBED_CONF_LORA_TX_MAX_SIZE              255
+#warning "Cannot set TX Max size more than MTU=255"
+#define MBED_CONF_LORA_TX_MAX_SIZE              255
 #endif
 
 /*!
@@ -431,8 +431,7 @@ typedef union {
     /*!
      * The structure containing single access to header bits.
      */
-    struct hdr_bits_s
-    {
+    struct hdr_bits_s {
         /*!
          * Major version.
          */
@@ -461,8 +460,7 @@ typedef union {
     /*!
      * The structure containing single access to bits.
      */
-    struct ctrl_bits_s
-    {
+    struct ctrl_bits_s {
         /*!
          * Frame options length.
          */
@@ -1023,7 +1021,7 @@ typedef struct {
     /*!
      * The RX window timeout
      */
-     uint32_t window_timeout;
+    uint32_t window_timeout;
     /*!
      * The RX window offset
      */
@@ -1085,39 +1083,39 @@ typedef struct {
 } loramac_keys;
 
 typedef struct {
-      /*!
-       * Aggregated duty cycle management
-       */
-      lorawan_time_t aggregated_last_tx_time;
-      lorawan_time_t aggregated_timeoff;
+    /*!
+     * Aggregated duty cycle management
+     */
+    lorawan_time_t aggregated_last_tx_time;
+    lorawan_time_t aggregated_timeoff;
 
-      /*!
-       * Stores the time at LoRaMac initialization.
-       *
-       * \remark Used for the BACKOFF_DC computation.
-       */
-      lorawan_time_t mac_init_time;
+    /*!
+     * Stores the time at LoRaMac initialization.
+     *
+     * \remark Used for the BACKOFF_DC computation.
+     */
+    lorawan_time_t mac_init_time;
 
-      /*!
-       * Last transmission time on air
-       */
-      lorawan_time_t tx_toa;
+    /*!
+     * Last transmission time on air
+     */
+    lorawan_time_t tx_toa;
 
-      /*!
-       * LoRaMac duty cycle backoff timer
-       */
-      timer_event_t backoff_timer;
+    /*!
+     * LoRaMac duty cycle backoff timer
+     */
+    timer_event_t backoff_timer;
 
-      /*!
-       * LoRaMac reception windows timers
-       */
-      timer_event_t rx_window1_timer;
-      timer_event_t rx_window2_timer;
+    /*!
+     * LoRaMac reception windows timers
+     */
+    timer_event_t rx_window1_timer;
+    timer_event_t rx_window2_timer;
 
-      /*!
-       * Acknowledge timeout timer. Used for packet retransmissions.
-       */
-      timer_event_t ack_timeout_timer;
+    /*!
+     * Acknowledge timeout timer. Used for packet retransmissions.
+     */
+    timer_event_t ack_timeout_timer;
 
 } lorawan_timers;
 
@@ -1126,7 +1124,7 @@ typedef struct {
     /*!
      * Holds the type of current Receive window slot
      */
-     rx_slot_t rx_slot;
+    rx_slot_t rx_slot;
 
     /*!
      * Indicates if the node is connected to a private or public network
