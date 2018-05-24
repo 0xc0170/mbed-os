@@ -19,9 +19,9 @@ Unchanged  .\lorastack\phy\LoRaPHYCN779.cpp
 Unchanged  .\lorastack\phy\LoRaPHYCN779.h
 Unchanged  .\lorastack\phy\LoRaPHYEU433.cpp
 Unchanged  .\lorastack\phy\LoRaPHYEU433.h
-Formatted  .\lorastack\phy\LoRaPHYEU868.cpp
+Unchanged  .\lorastack\phy\LoRaPHYEU868.cpp
 Unchanged  .\lorastack\phy\LoRaPHYEU868.h
-Formatted  .\lorastack\phy\LoRaPHYIN865.cpp
+Unchanged  .\lorastack\phy\LoRaPHYIN865.cpp
 Unchanged  .\lorastack\phy\LoRaPHYIN865.h
 Formatted  .\lorastack\phy\LoRaPHYKR920.cpp
 Formatted  .\lorastack\phy\LoRaPHYKR920.h

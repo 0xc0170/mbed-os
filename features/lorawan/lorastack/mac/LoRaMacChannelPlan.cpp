@@ -67,7 +67,7 @@ lorawan_status_t LoRaMacChannelPlan::set_plan(const lorawan_channelplan_t &plan)
 }
 
 lorawan_status_t LoRaMacChannelPlan::get_plan(lorawan_channelplan_t &plan,
-        const channel_params_t *channel_list)
+                                              const channel_params_t *channel_list)
 {
     uint8_t max_num_channels;
     uint16_t *channel_mask;

@@ -264,7 +264,7 @@ void LoRaPHY::set_last_tx_done(uint8_t channel, bool joined, lorawan_time_t last
 }
 
 lorawan_time_t LoRaPHY::update_band_timeoff(bool joined, bool duty_cycle,
-        band_t *bands, uint8_t nb_bands)
+                                            band_t *bands, uint8_t nb_bands)
 {
     lorawan_time_t next_tx_delay = (lorawan_time_t)(-1);
 
@@ -1204,8 +1204,8 @@ void LoRaPHY::calculate_backoff(bool joined, bool last_tx_was_join_req, bool dc_
 }
 
 lorawan_status_t LoRaPHY::set_next_channel(channel_selection_params_t *params,
-        uint8_t *channel, lorawan_time_t *time,
-        lorawan_time_t *aggregate_timeoff)
+                                           uint8_t *channel, lorawan_time_t *time,
+                                           lorawan_time_t *aggregate_timeoff)
 {
     uint8_t channel_count = 0;
     uint8_t delay_tx = 0;

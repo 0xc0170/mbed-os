@@ -1214,7 +1214,7 @@ void LoRaWANStack::compliance_test_handler(loramac_mcps_indication_t *mcps_indic
                     mlme_req.type = MLME_TXCW_1;
                     mlme_req.cw_tx_mode.timeout = (uint16_t)((mcps_indication->buffer[1] << 8) | mcps_indication->buffer[2]);
                     mlme_req.cw_tx_mode.frequency = (uint32_t)((mcps_indication->buffer[3] << 16) | (mcps_indication->buffer[4] << 8)
-                                                    | mcps_indication->buffer[5]) * 100;
+                                                               | mcps_indication->buffer[5]) * 100;
                     mlme_req.cw_tx_mode.power = mcps_indication->buffer[6];
                     _loramac.mlme_request(&mlme_req);
                 }

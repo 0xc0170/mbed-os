@@ -416,8 +416,8 @@ bool LoRaPHYUS915::tx_config(tx_config_params_t *config, int8_t *tx_power,
 {
     int8_t phy_dr = datarates_US915[config->datarate];
     int8_t tx_power_limited = limit_tx_power(config->tx_power,
-                              bands[channels[config->channel].band].max_tx_pwr,
-                              config->datarate);
+                                             bands[channels[config->channel].band].max_tx_pwr,
+                                             config->datarate);
 
     uint32_t bandwidth = get_bandwidth(config->datarate);
     int8_t phy_tx_power = 0;
@@ -600,8 +600,8 @@ int8_t LoRaPHYUS915::get_alternate_DR(uint8_t nb_trials)
 }
 
 lorawan_status_t LoRaPHYUS915::set_next_channel(channel_selection_params_t *params,
-        uint8_t *channel, lorawan_time_t *time,
-        lorawan_time_t *aggregate_timeOff)
+                                                uint8_t *channel, lorawan_time_t *time,
+                                                lorawan_time_t *aggregate_timeOff)
 {
     uint8_t nb_enabled_channels = 0;
     uint8_t delay_tx = 0;
@@ -631,9 +631,9 @@ lorawan_status_t LoRaPHYUS915::set_next_channel(channel_selection_params_t *para
 
         // Search how many channels are enabled
         nb_enabled_channels = enabled_channel_count(params->joined,
-                              params->current_datarate,
-                              current_channel_mask,
-                              enabled_channels, &delay_tx);
+                                                    params->current_datarate,
+                                                    current_channel_mask,
+                                                    enabled_channels, &delay_tx);
     } else {
         delay_tx++;
         next_tx_delay = params->aggregate_timeoff - _lora_time.get_elapsed_time(params->last_aggregate_tx_time);
@@ -667,8 +667,8 @@ void LoRaPHYUS915::set_tx_cont_mode(cw_mode_params_t *params, uint32_t given_fre
     (void)given_frequency;
 
     int8_t tx_power_limited = limit_tx_power(params->tx_power,
-                              bands[channels[params->channel].band].max_tx_pwr,
-                              params->datarate);
+                                             bands[channels[params->channel].band].max_tx_pwr,
+                                             params->datarate);
     int8_t phyTxPower = 0;
     uint32_t frequency = channels[params->channel].frequency;
 

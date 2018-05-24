@@ -567,8 +567,8 @@ int8_t LoRaPHYAU915::get_alternate_DR(uint8_t nb_trials)
 }
 
 lorawan_status_t LoRaPHYAU915::set_next_channel(channel_selection_params_t *next_chan_params,
-        uint8_t *channel, lorawan_time_t *time,
-        lorawan_time_t *aggregated_timeOff)
+                                                uint8_t *channel, lorawan_time_t *time,
+                                                lorawan_time_t *aggregated_timeOff)
 {
     uint8_t nb_enabled_channels = 0;
     uint8_t delay_tx = 0;
@@ -600,9 +600,9 @@ lorawan_status_t LoRaPHYAU915::set_next_channel(channel_selection_params_t *next
 
         // Search how many channels are enabled
         nb_enabled_channels = enabled_channel_count(next_chan_params->joined,
-                              next_chan_params->current_datarate,
-                              current_channel_mask,
-                              enabled_channels, &delay_tx);
+                                                    next_chan_params->current_datarate,
+                                                    current_channel_mask,
+                                                    enabled_channels, &delay_tx);
     } else {
         delay_tx++;
         next_tx_delay = next_chan_params->aggregate_timeoff - _lora_time.get_elapsed_time(next_chan_params->last_aggregate_tx_time);

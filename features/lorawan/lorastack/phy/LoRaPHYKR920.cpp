@@ -408,8 +408,8 @@ bool LoRaPHYKR920::tx_config(tx_config_params_t *config, int8_t *tx_power,
 }
 
 lorawan_status_t LoRaPHYKR920::set_next_channel(channel_selection_params_t *params,
-        uint8_t *channel, lorawan_time_t *time,
-        lorawan_time_t *aggregate_timeoff)
+                                                uint8_t *channel, lorawan_time_t *time,
+                                                lorawan_time_t *aggregate_timeoff)
 {
     uint8_t next_channel_idx = 0;
     uint8_t nb_enabled_channels = 0;
@@ -432,8 +432,8 @@ lorawan_status_t LoRaPHYKR920::set_next_channel(channel_selection_params_t *para
 
         // Search how many channels are enabled
         nb_enabled_channels = enabled_channel_count(params->joined, params->current_datarate,
-                              channel_mask,
-                              enabled_channels, &delay_tx);
+                                                    channel_mask,
+                                                    enabled_channels, &delay_tx);
     } else {
         delay_tx++;
         nextTxDelay = params->aggregate_timeoff - _lora_time.get_elapsed_time(params->last_aggregate_tx_time);

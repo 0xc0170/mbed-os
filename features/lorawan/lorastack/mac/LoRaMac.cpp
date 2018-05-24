@@ -245,8 +245,8 @@ void LoRaMac::handle_join_accept_frame(const uint8_t *payload,
     _mlme_confirmation.nb_retries = _params.join_request_trial_counter;
 
     if (0 != _lora_crypto.decrypt_join_frame(payload + 1, size - 1,
-            _params.keys.app_key, APPKEY_KEY_LENGTH,
-            _params.rx_buffer + 1)) {
+                                             _params.keys.app_key, APPKEY_KEY_LENGTH,
+                                             _params.rx_buffer + 1)) {
         _mlme_confirmation.status = LORAMAC_EVENT_INFO_STATUS_CRYPTO_FAIL;
         return;
     }
@@ -270,11 +270,11 @@ void LoRaMac::handle_join_accept_frame(const uint8_t *payload,
     if (mic_rx == mic) {
 
         if (_lora_crypto.compute_skeys_for_join_frame(_params.keys.app_key,
-                APPKEY_KEY_LENGTH,
-                _params.rx_buffer + 1,
-                _params.dev_nonce,
-                _params.keys.nwk_skey,
-                _params.keys.app_skey) != 0) {
+                                                      APPKEY_KEY_LENGTH,
+                                                      _params.rx_buffer + 1,
+                                                      _params.dev_nonce,
+                                                      _params.keys.nwk_skey,
+                                                      _params.keys.app_skey) != 0) {
             _mlme_confirmation.status = LORAMAC_EVENT_INFO_STATUS_CRYPTO_FAIL;
             return;
         }
@@ -317,7 +317,7 @@ void LoRaMac::handle_join_accept_frame(const uint8_t *payload,
 void LoRaMac::check_frame_size(uint16_t size)
 {
     uint8_t value = _lora_phy.get_max_payload(_mcps_indication.rx_datarate,
-                    _params.is_repeater_supported);
+                                              _params.is_repeater_supported);
 
     if (MAX(0, (int16_t)((int16_t)size - (int16_t)LORA_MAC_FRMPAYLOAD_OVERHEAD))
             > (int32_t) value) {
@@ -375,14 +375,14 @@ bool LoRaMac::message_integrity_check(const uint8_t *const payload,
 }
 
 void LoRaMac::extract_data_and_mac_commands(const uint8_t *payload,
-        uint16_t size,
-        uint8_t fopts_len,
-        uint8_t *nwk_skey,
-        uint8_t *app_skey,
-        uint32_t address,
-        uint32_t downlink_counter,
-        int16_t rssi,
-        int8_t snr)
+                                            uint16_t size,
+                                            uint8_t fopts_len,
+                                            uint8_t *nwk_skey,
+                                            uint8_t *app_skey,
+                                            uint32_t address,
+                                            uint32_t downlink_counter,
+                                            int16_t rssi,
+                                            int8_t snr)
 {
     uint8_t frame_len = 0;
     uint8_t payload_start_index = 8 + fopts_len;
@@ -796,7 +796,7 @@ lorawan_status_t LoRaMac::send_join_request()
     loramac_frame_ctrl_t fctrl;
 
     _params.sys_params.channel_data_rate = _lora_phy.get_alternate_DR(
-            _params.join_request_trial_counter + 1);
+                                               _params.join_request_trial_counter + 1);
 
     mac_hdr.value = 0;
     mac_hdr.bits.mtype = FRAME_TYPE_JOIN_REQ;
@@ -894,10 +894,10 @@ void LoRaMac::open_rx2_window()
 }
 
 void LoRaMac::check_to_disable_ack_timeout(bool node_ack_requested,
-        device_class_t dev_class,
-        bool ack_received,
-        uint8_t ack_timeout_retries_counter,
-        uint8_t ack_timeout_retries)
+                                           device_class_t dev_class,
+                                           bool ack_received,
+                                           uint8_t ack_timeout_retries_counter,
+                                           uint8_t ack_timeout_retries)
 {
     // There are three cases where we need to stop the AckTimeoutTimer:
     if (node_ack_requested == false) {
@@ -930,7 +930,7 @@ void LoRaMac::on_ack_timeout_timer_event(void)
     // reduce data rate
     if ((_params.ack_timeout_retry_counter % 2)) {
         _params.sys_params.channel_data_rate = _lora_phy.get_next_lower_tx_datarate(
-                _params.sys_params.channel_data_rate);
+                                                   _params.sys_params.channel_data_rate);
     }
 
     // Schedule a retry
@@ -1031,9 +1031,9 @@ lorawan_status_t LoRaMac::schedule_tx()
     next_channel.last_aggregate_tx_time = _params.timers.aggregated_last_tx_time;
 
     lorawan_status_t status = _lora_phy.set_next_channel(&next_channel,
-                              &_params.channel,
-                              &backoff_time,
-                              &_params.timers.aggregated_timeoff);
+                                                         &_params.channel,
+                                                         &backoff_time,
+                                                         &_params.timers.aggregated_timeoff);
 
     switch (status) {
         case LORAWAN_STATUS_NO_CHANNEL_FOUND:
@@ -1052,7 +1052,7 @@ lorawan_status_t LoRaMac::schedule_tx()
     tr_debug("Next Channel Idx=%d, DR=%d", _params.channel, next_channel.current_datarate);
 
     uint8_t dr_offset = _lora_phy.apply_DR_offset(_params.sys_params.channel_data_rate,
-                        _params.sys_params.rx1_dr_offset);
+                                                  _params.sys_params.rx1_dr_offset);
 
     _lora_phy.compute_rx_win_params(dr_offset, _params.sys_params.min_rx_symb,
                                     _params.sys_params.max_sys_rx_error,
@@ -1452,10 +1452,10 @@ lorawan_status_t LoRaMac::prepare_frame(loramac_mhdr_t *machdr,
             _params.tx_buffer[_params.tx_buffer_len++] = (_params.dev_nonce >> 8) & 0xFF;
 
             if (0 != _lora_crypto.compute_join_frame_mic(_params.tx_buffer,
-                    _params.tx_buffer_len & 0xFF,
-                    _params.keys.app_key,
-                    APPKEY_KEY_LENGTH,
-                    &mic)) {
+                                                         _params.tx_buffer_len & 0xFF,
+                                                         _params.keys.app_key,
+                                                         APPKEY_KEY_LENGTH,
+                                                         &mic)) {
                 return LORAWAN_STATUS_CRYPTO_FAIL;
             }
 

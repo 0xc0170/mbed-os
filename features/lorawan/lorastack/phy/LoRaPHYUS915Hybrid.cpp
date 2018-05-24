@@ -424,8 +424,8 @@ bool LoRaPHYUS915Hybrid::tx_config(tx_config_params_t *config, int8_t *tx_power,
     int8_t phy_dr = datarates_US915_HYBRID[config->datarate];
 
     int8_t tx_power_limited = limit_tx_power(config->tx_power,
-                              bands[channels[config->channel].band].max_tx_pwr,
-                              config->datarate);
+                                             bands[channels[config->channel].band].max_tx_pwr,
+                                             config->datarate);
 
     uint32_t bandwidth = get_bandwidth(config->datarate);
     int8_t phy_tx_power = 0;
@@ -453,9 +453,9 @@ bool LoRaPHYUS915Hybrid::tx_config(tx_config_params_t *config, int8_t *tx_power,
 }
 
 uint8_t LoRaPHYUS915Hybrid::link_ADR_request(adr_req_params_t *params,
-        int8_t *dr_out, int8_t *tx_power_out,
-        uint8_t *nb_rep_out,
-        uint8_t *nb_bytes_parsed)
+                                             int8_t *dr_out, int8_t *tx_power_out,
+                                             uint8_t *nb_rep_out,
+                                             uint8_t *nb_bytes_parsed)
 {
     uint8_t status = 0x07;
     link_adr_params_t adr_settings;
@@ -600,8 +600,8 @@ int8_t LoRaPHYUS915Hybrid::get_alternate_DR(uint8_t nb_trials)
 }
 
 lorawan_status_t LoRaPHYUS915Hybrid::set_next_channel(channel_selection_params_t *params,
-        uint8_t *channel, lorawan_time_t *time,
-        lorawan_time_t *aggregate_timeOff)
+                                                      uint8_t *channel, lorawan_time_t *time,
+                                                      lorawan_time_t *aggregate_timeOff)
 {
     uint8_t nb_enabled_channels = 0;
     uint8_t delay_tx = 0;
@@ -632,9 +632,9 @@ lorawan_status_t LoRaPHYUS915Hybrid::set_next_channel(channel_selection_params_t
 
         // Search how many channels are enabled
         nb_enabled_channels = enabled_channel_count(params->joined,
-                              params->current_datarate,
-                              current_channel_mask,
-                              enabled_channels, &delay_tx);
+                                                    params->current_datarate,
+                                                    current_channel_mask,
+                                                    enabled_channels, &delay_tx);
     } else {
         delay_tx++;
         next_tx_delay = params->aggregate_timeoff - _lora_time.get_elapsed_time(params->last_aggregate_tx_time);
@@ -669,8 +669,8 @@ void LoRaPHYUS915Hybrid::set_tx_cont_mode(cw_mode_params_t *params, uint32_t giv
     (void)given_frequency;
 
     int8_t tx_power_limited = limit_tx_power(params->tx_power,
-                              bands[channels[params->channel].band].max_tx_pwr,
-                              params->datarate);
+                                             bands[channels[params->channel].band].max_tx_pwr,
+                                             params->datarate);
 
     int8_t phy_tx_power = 0;
     uint32_t frequency = channels[params->channel].frequency;
@@ -714,7 +714,7 @@ void LoRaPHYUS915Hybrid::reenable_500khz_channels(uint16_t mask, uint16_t *chann
 }
 
 int8_t LoRaPHYUS915Hybrid::limit_tx_power(int8_t txPower, int8_t maxBandTxPower,
-        int8_t datarate)
+                                          int8_t datarate)
 {
     int8_t txPowerResult = txPower;
 

@@ -71,7 +71,7 @@ public:
     virtual int8_t get_alternate_DR(uint8_t nb_trials);
 
     virtual lorawan_status_t set_next_channel(channel_selection_params_t *params, uint8_t *channel,
-            lorawan_time_t *time, lorawan_time_t *aggregate_timeOff);
+                                              lorawan_time_t *time, lorawan_time_t *aggregate_timeOff);
 
     virtual void set_tx_cont_mode(cw_mode_params_t *continuousWave,
                                   uint32_t frequency = 0);

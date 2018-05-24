@@ -177,8 +177,8 @@ int LoRaMacCrypto::decrypt_payload(const uint8_t *buffer, uint16_t size,
 }
 
 int LoRaMacCrypto::compute_join_frame_mic(const uint8_t *buffer, uint16_t size,
-        const uint8_t *key, uint32_t key_length,
-        uint32_t *mic)
+                                          const uint8_t *key, uint32_t key_length,
+                                          uint32_t *mic)
 {
     int ret = 0;
 
@@ -249,8 +249,8 @@ exit:
 }
 
 int LoRaMacCrypto::compute_skeys_for_join_frame(const uint8_t *key, uint32_t key_length,
-        const uint8_t *app_nonce, uint16_t dev_nonce,
-        uint8_t *nwk_skey, uint8_t *app_skey)
+                                                const uint8_t *app_nonce, uint16_t dev_nonce,
+                                                uint8_t *nwk_skey, uint8_t *app_skey)
 {
     uint8_t nonce[16];
     uint8_t *p_dev_nonce = (uint8_t *) &dev_nonce;
@@ -337,7 +337,7 @@ int LoRaMacCrypto::decrypt_join_frame(const uint8_t *, uint16_t, const uint8_t *
 }
 
 int LoRaMacCrypto::compute_skeys_for_join_frame(const uint8_t *, uint32_t, const uint8_t *, uint16_t,
-        uint8_t *, uint8_t *)
+                                                uint8_t *, uint8_t *)
 {
     MBED_ASSERT(0 && "[LoRaCrypto] Must enable AES, CMAC & CIPHER from mbedTLS");
 
