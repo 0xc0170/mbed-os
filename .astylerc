@@ -32,3 +32,5 @@ align-reference=name
 # Attach { for classes and namespaces
 attach-namespaces
 attach-classes
+
+max-instatement-indent=120

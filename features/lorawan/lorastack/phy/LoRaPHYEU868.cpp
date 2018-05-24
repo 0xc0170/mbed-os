@@ -182,7 +182,7 @@
  * Band 0 definition
  * { DutyCycle, TxMaxPower, LastJoinTxDoneTime, LastTxDoneTime, TimeOff }
  */
-static const band_t EU868_BAND0 = {100 , EU868_MAX_TX_POWER, 0, 0, 0,865000000, 868000000}; //  1.0 %
+static const band_t EU868_BAND0 = {100 , EU868_MAX_TX_POWER, 0, 0, 0, 865000000, 868000000}; //  1.0 %
 /*!
  * Band 1 definition
  * { DutyCycle, TxMaxPower, LastJoinTxDoneTime, LastTxDoneTime, TimeOff }
@@ -217,19 +217,19 @@ static const band_t EU868_BAND5 = {1000, EU868_MAX_TX_POWER, 0, 0, 0, 863000000,
  * LoRaMac default channel 1
  * Channel = { Frequency [Hz], RX1 Frequency [Hz], { ( ( DrMax << 4 ) | DrMin ) }, Band }
  */
-static const channel_params_t EU868_LC1 = {868100000, 0, { ( ( DR_5 << 4 ) | DR_0 ) }, 1};
+static const channel_params_t EU868_LC1 = {868100000, 0, { ((DR_5 << 4) | DR_0) }, 1};
 
 /*!
  * LoRaMac default channel 2
  * Channel = { Frequency [Hz], RX1 Frequency [Hz], { ( ( DrMax << 4 ) | DrMin ) }, Band }
  */
-static const channel_params_t EU868_LC2 = {868300000, 0, { ( ( DR_5 << 4 ) | DR_0 ) }, 1};
+static const channel_params_t EU868_LC2 = {868300000, 0, { ((DR_5 << 4) | DR_0) }, 1};
 
 /*!
  * LoRaMac default channel 3
  * Channel = { Frequency [Hz], RX1 Frequency [Hz], { ( ( DrMax << 4 ) | DrMin ) }, Band }
  */
-static const channel_params_t EU868_LC3 = {868500000, 0, { ( ( DR_5 << 4 ) | DR_0 ) }, 1};
+static const channel_params_t EU868_LC3 = {868500000, 0, { ((DR_5 << 4) | DR_0) }, 1};
 
 /*!
  * LoRaMac channels which are allowed for the join procedure

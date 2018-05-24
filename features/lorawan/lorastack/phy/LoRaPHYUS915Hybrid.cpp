@@ -191,8 +191,7 @@ static const uint32_t bandwidths_US915_HYBRID[] = { 125000, 125000, 125000, 1250
 /*!
  * Up/Down link data rates offset definition
  */
-static const int8_t datarate_offsets_US915_HYBRID[5][4] =
-{
+static const int8_t datarate_offsets_US915_HYBRID[5][4] = {
     { DR_10, DR_9 , DR_8 , DR_8  }, // DR_0
     { DR_11, DR_10, DR_9 , DR_8  }, // DR_1
     { DR_12, DR_11, DR_10, DR_9  }, // DR_2
@@ -219,14 +218,14 @@ LoRaPHYUS915Hybrid::LoRaPHYUS915Hybrid(LoRaWANTimeHandler &lora_time)
     // 125 kHz channels
     for (uint8_t i = 0; i < US915_HYBRID_MAX_NB_CHANNELS - 8; i++) {
         channels[i].frequency = 902300000 + i * 200000;
-        channels[i].dr_range.value = ( DR_3 << 4 ) | DR_0;
+        channels[i].dr_range.value = (DR_3 << 4) | DR_0;
         channels[i].band = 0;
     }
 
     // 500 kHz channels
     for (uint8_t i = US915_HYBRID_MAX_NB_CHANNELS - 8; i < US915_HYBRID_MAX_NB_CHANNELS; i++) {
         channels[i].frequency = 903000000 + (i - (US915_HYBRID_MAX_NB_CHANNELS - 8)) * 1600000;
-        channels[i].dr_range.value = ( DR_4 << 4 ) | DR_4;
+        channels[i].dr_range.value = (DR_4 << 4) | DR_4;
         channels[i].band = 0;
     }
 
@@ -329,8 +328,8 @@ void LoRaPHYUS915Hybrid::restore_default_channels()
     }
 }
 
-bool LoRaPHYUS915Hybrid::get_next_ADR(bool restore_channel_mask, int8_t& dr_out,
-                                      int8_t& tx_power_out, uint32_t& adr_ack_cnt)
+bool LoRaPHYUS915Hybrid::get_next_ADR(bool restore_channel_mask, int8_t &dr_out,
+                                      int8_t &tx_power_out, uint32_t &adr_ack_cnt)
 {
     bool adrAckReq = false;
 
@@ -369,7 +368,7 @@ bool LoRaPHYUS915Hybrid::get_next_ADR(bool restore_channel_mask, int8_t& dr_out,
     return adrAckReq;
 }
 
-bool LoRaPHYUS915Hybrid::rx_config(rx_config_params_t* config)
+bool LoRaPHYUS915Hybrid::rx_config(rx_config_params_t *config)
 {
     int8_t dr = config->datarate;
     uint8_t max_payload = 0;
@@ -397,7 +396,7 @@ bool LoRaPHYUS915Hybrid::rx_config(rx_config_params_t* config)
 
     _radio->lock();
 
-    _radio->set_channel( frequency );
+    _radio->set_channel(frequency);
 
     // Radio configuration
     _radio->set_rx_config(MODEM_LORA, config->bandwidth, phy_dr, 1, 0, 8,
@@ -419,16 +418,16 @@ bool LoRaPHYUS915Hybrid::rx_config(rx_config_params_t* config)
     return true;
 }
 
-bool LoRaPHYUS915Hybrid::tx_config(tx_config_params_t* config, int8_t* tx_power,
-                                   lorawan_time_t* tx_toa)
+bool LoRaPHYUS915Hybrid::tx_config(tx_config_params_t *config, int8_t *tx_power,
+                                   lorawan_time_t *tx_toa)
 {
     int8_t phy_dr = datarates_US915_HYBRID[config->datarate];
 
     int8_t tx_power_limited = limit_tx_power(config->tx_power,
-                                           bands[channels[config->channel].band].max_tx_pwr,
-                                           config->datarate);
+                                             bands[channels[config->channel].band].max_tx_pwr,
+                                             config->datarate);
 
-    uint32_t bandwidth = get_bandwidth (config->datarate);
+    uint32_t bandwidth = get_bandwidth(config->datarate);
     int8_t phy_tx_power = 0;
 
     // Calculate physical TX power
@@ -436,7 +435,7 @@ bool LoRaPHYUS915Hybrid::tx_config(tx_config_params_t* config, int8_t* tx_power,
 
     _radio->lock();
 
-    _radio->set_channel( channels[config->channel].frequency );
+    _radio->set_channel(channels[config->channel].frequency);
 
     _radio->set_tx_config(MODEM_LORA, phy_tx_power, 0, bandwidth, phy_dr, 1, 8,
                           false, true, 0, 0, false, 3000);
@@ -453,10 +452,10 @@ bool LoRaPHYUS915Hybrid::tx_config(tx_config_params_t* config, int8_t* tx_power,
     return true;
 }
 
-uint8_t LoRaPHYUS915Hybrid::link_ADR_request(adr_req_params_t* params,
-                                             int8_t* dr_out, int8_t* tx_power_out,
-                                             uint8_t* nb_rep_out,
-                                             uint8_t* nb_bytes_parsed)
+uint8_t LoRaPHYUS915Hybrid::link_ADR_request(adr_req_params_t *params,
+                                             int8_t *dr_out, int8_t *tx_power_out,
+                                             uint8_t *nb_rep_out,
+                                             uint8_t *nb_bytes_parsed)
 {
     uint8_t status = 0x07;
     link_adr_params_t adr_settings;
@@ -491,7 +490,7 @@ uint8_t LoRaPHYUS915Hybrid::link_ADR_request(adr_req_params_t* params,
             temp_channel_mask[3] = 0xFFFF;
             // Apply chMask to channels 64 to 71
             temp_channel_mask[4] = adr_settings.channel_mask;
-        } else if( adr_settings.ch_mask_ctrl == 7 ) {
+        } else if (adr_settings.ch_mask_ctrl == 7) {
             // Disable all 125 kHz channels
             temp_channel_mask[0] = 0x0000;
             temp_channel_mask[1] = 0x0000;
@@ -499,7 +498,7 @@ uint8_t LoRaPHYUS915Hybrid::link_ADR_request(adr_req_params_t* params,
             temp_channel_mask[3] = 0x0000;
             // Apply chMask to channels 64 to 71
             temp_channel_mask[4] = adr_settings.channel_mask;
-        } else if( adr_settings.ch_mask_ctrl == 5 ) {
+        } else if (adr_settings.ch_mask_ctrl == 5) {
             // RFU
             status &= 0xFE; // Channel mask KO
         } else {
@@ -509,11 +508,11 @@ uint8_t LoRaPHYUS915Hybrid::link_ADR_request(adr_req_params_t* params,
 
     // FCC 15.247 paragraph F mandates to hop on at least 2 125 kHz channels
     if ((adr_settings.datarate < DR_4) &&
-        (num_active_channels( temp_channel_mask, 0, 4 ) < 2)) {
+            (num_active_channels(temp_channel_mask, 0, 4) < 2)) {
         status &= 0xFE; // Channel mask KO
     }
 
-    if( validate_channel_mask(temp_channel_mask ) == false) {
+    if (validate_channel_mask(temp_channel_mask) == false) {
         status &= 0xFE; // Channel mask KO
     }
 
@@ -553,7 +552,7 @@ uint8_t LoRaPHYUS915Hybrid::link_ADR_request(adr_req_params_t* params,
     return status;
 }
 
-uint8_t LoRaPHYUS915Hybrid::accept_rx_param_setup_req(rx_param_setup_req_t* params)
+uint8_t LoRaPHYUS915Hybrid::accept_rx_param_setup_req(rx_param_setup_req_t *params)
 {
     uint8_t status = 0x07;
     uint32_t freq = params->frequency;
@@ -562,7 +561,7 @@ uint8_t LoRaPHYUS915Hybrid::accept_rx_param_setup_req(rx_param_setup_req_t* para
     if ((_radio->check_rf_frequency(freq) == false)
             || (freq < US915_HYBRID_FIRST_RX1_CHANNEL)
             || (freq > US915_HYBRID_LAST_RX1_CHANNEL)
-            || (((freq - ( uint32_t ) US915_HYBRID_FIRST_RX1_CHANNEL) % (uint32_t) US915_HYBRID_STEPWIDTH_RX1_CHANNEL) != 0)) {
+            || (((freq - (uint32_t) US915_HYBRID_FIRST_RX1_CHANNEL) % (uint32_t) US915_HYBRID_STEPWIDTH_RX1_CHANNEL) != 0)) {
         status &= 0xFE; // Channel frequency KO
     }
 
@@ -600,9 +599,9 @@ int8_t LoRaPHYUS915Hybrid::get_alternate_DR(uint8_t nb_trials)
     return datarate;
 }
 
-lorawan_status_t LoRaPHYUS915Hybrid::set_next_channel(channel_selection_params_t* params,
-                                                      uint8_t* channel, lorawan_time_t* time,
-                                                      lorawan_time_t* aggregate_timeOff)
+lorawan_status_t LoRaPHYUS915Hybrid::set_next_channel(channel_selection_params_t *params,
+                                                      uint8_t *channel, lorawan_time_t *time,
+                                                      lorawan_time_t *aggregate_timeOff)
 {
     uint8_t nb_enabled_channels = 0;
     uint8_t delay_tx = 0;
@@ -617,12 +616,12 @@ lorawan_status_t LoRaPHYUS915Hybrid::set_next_channel(channel_selection_params_t
 
     // Check other channels
     if (params->current_datarate >= DR_4) {
-        if ((current_channel_mask[4] & 0x00FF ) == 0) {
+        if ((current_channel_mask[4] & 0x00FF) == 0) {
             current_channel_mask[4] = channel_mask[4];
         }
     }
 
-    if (params->aggregate_timeoff <= _lora_time.get_elapsed_time( params->last_aggregate_tx_time)) {
+    if (params->aggregate_timeoff <= _lora_time.get_elapsed_time(params->last_aggregate_tx_time)) {
         // Reset Aggregated time off
         *aggregate_timeOff = 0;
 
@@ -665,13 +664,13 @@ lorawan_status_t LoRaPHYUS915Hybrid::set_next_channel(channel_selection_params_t
     }
 }
 
-void LoRaPHYUS915Hybrid::set_tx_cont_mode(cw_mode_params_t* params, uint32_t given_frequency)
+void LoRaPHYUS915Hybrid::set_tx_cont_mode(cw_mode_params_t *params, uint32_t given_frequency)
 {
     (void)given_frequency;
 
     int8_t tx_power_limited = limit_tx_power(params->tx_power,
-                                           bands[channels[params->channel].band].max_tx_pwr,
-                                           params->datarate);
+                                             bands[channels[params->channel].band].max_tx_pwr,
+                                             params->datarate);
 
     int8_t phy_tx_power = 0;
     uint32_t frequency = channels[params->channel].frequency;
@@ -696,7 +695,7 @@ uint8_t LoRaPHYUS915Hybrid::apply_DR_offset(int8_t dr, int8_t drOffset)
 }
 
 
-void LoRaPHYUS915Hybrid::reenable_500khz_channels(uint16_t mask, uint16_t* channelsMask)
+void LoRaPHYUS915Hybrid::reenable_500khz_channels(uint16_t mask, uint16_t *channelsMask)
 {
     uint16_t blockMask = mask;
 
@@ -738,7 +737,7 @@ int8_t LoRaPHYUS915Hybrid::limit_tx_power(int8_t txPower, int8_t maxBandTxPower,
     return txPowerResult;
 }
 
-bool LoRaPHYUS915Hybrid::validate_channel_mask(uint16_t* channel_masks)
+bool LoRaPHYUS915Hybrid::validate_channel_mask(uint16_t *channel_masks)
 {
     bool mask_state = false;
 
@@ -752,22 +751,22 @@ bool LoRaPHYUS915Hybrid::validate_channel_mask(uint16_t* channel_masks)
         temp_channel_masks[i] = channel_masks[i];
     }
 
-    for(uint8_t i = 0; i < 4; i++) {
+    for (uint8_t i = 0; i < 4; i++) {
         block1 = temp_channel_masks[i] & 0x00FF;
         block2 = temp_channel_masks[i] & 0xFF00;
 
         if (count_bits(block1, 16) > 1) {
 
             temp_channel_masks[i] &= block1;
-            temp_channel_masks[4] = 1 << ( i * 2 );
+            temp_channel_masks[4] = 1 << (i * 2);
             mask_state = true;
             index = i;
             break;
 
-        } else if( count_bits( block2, 16 ) > 1 ) {
+        } else if (count_bits(block2, 16) > 1) {
 
             temp_channel_masks[i] &= block2;
-            temp_channel_masks[4] = 1 << ( i * 2 + 1 );
+            temp_channel_masks[4] = 1 << (i * 2 + 1);
             mask_state = true;
             index = i;
             break;
