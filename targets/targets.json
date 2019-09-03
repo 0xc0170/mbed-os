@@ -3699,6 +3699,7 @@
         "detect_code": ["0827"],
         "macros_add": [
             "STM32L486xx",
+            "USBHOST_OTHER",
             "MBED_TICKLESS",
             "EXTRA_IDLE_STACK_REQUIRED",
             "MBEDTLS_CONFIG_HW_SUPPORT",
@@ -4318,6 +4319,7 @@
         "detect_code": ["0764"],
         "macros_add": [
             "STM32L475xx",
+            "USBHOST_OTHER",
             "MBED_TICKLESS",
             "EXTRA_IDLE_STACK_REQUIRED",
             "MBED_SPLIT_HEAP"
@@ -4329,6 +4331,7 @@
             "TRNG",
             "FLASH",
             "QSPI",
+            "USBDEVICE",
             "MPU"
         ],
         "release_versions": ["2", "5"],
@@ -4389,6 +4392,7 @@
         "detect_code": ["0820"],
         "macros_add": [
             "STM32L476xx",
+            "USBHOST_OTHER",
             "MBED_TICKLESS",
             "EXTRA_IDLE_STACK_REQUIRED",
             "MBED_SPLIT_HEAP"
@@ -4400,6 +4404,7 @@
             "TRNG",
             "FLASH",
             "QSPI",
+            "USBDEVICE",
             "MPU"
         ],
         "release_versions": ["2", "5"],
@@ -7984,6 +7989,7 @@
             "TRNG",
             "FLASH",
             "MPU",
+            "USBDEVICE",
             "QSPI"
         ],
         "release_versions": ["2", "5"],
@@ -8024,6 +8030,7 @@
             "SERIAL_ASYNCH",
             "TRNG",
             "FLASH",
+            "USBDEVICE",
             "MPU"
         ],
         "release_versions": ["2", "5"],
@@ -8068,6 +8075,7 @@
             "SERIAL_ASYNCH",
             "TRNG",
             "FLASH",
+            "USBDEVICE",
             "MPU"
         ],
         "release_versions": ["2", "5"],
