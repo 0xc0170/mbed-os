@@ -2,8 +2,7 @@
 
 add_subdirectory(device)
 
-mbed_add_cmake_directory("TARGET"
-"${MBED_OS_TARGET_LABELS}")
+mbed_add_cmake_directory("" "${MBED_OS_TARGET_LABELS}")
 
 target_sources(mbed-os PRIVATE dma_reqs.h)
 target_sources(mbed-os PRIVATE mbed_crc_api.c)
