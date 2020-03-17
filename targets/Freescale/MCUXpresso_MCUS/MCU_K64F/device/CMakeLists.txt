@@ -22,10 +22,8 @@ function(_mbed_set_linker_file)
     set_property(GLOBAL PROPERTY MBED_OS_TARGET_LINKER_FILE ${LINKER_FILE})
 endfunction()
 
-
 _mbed_get_assembly_k64f()
 _mbed_set_linker_file()
-
 
 target_sources(mbed-os PRIVATE cmsis.h)
 target_sources(mbed-os PRIVATE cmsis_nvic.h)
