@@ -27,6 +27,9 @@ add_subdirectory(hal)
 add_subdirectory(platform)
 add_subdirectory(targets)
 
+add_subdirectory(features)
+add_subdirectory(components)
+
 # Add additional modules
 get_property(modules GLOBAL PROPERTY MBED_OS_MODULES)
 
