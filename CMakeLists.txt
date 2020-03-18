@@ -10,14 +10,11 @@ if(POLICY CMP0076)
 endif()
 
 # Create Mbed OS library
-add_library(mbed-os OBJECT)
+# Trick this library to have empty.cpp file to be able to use it as library
+add_library(mbed-os STATIC empty.cpp)
 
 # Include mbed.h and config from generate folder
 target_include_directories(mbed-os PUBLIC .)
-
-# Link config from generate folder
-# TODO: @mbed-os-tools We need to get this gen_config somehow set up
-target_link_libraries(mbed-os PRIVATE gen_config)
 
 # Baremetal build with RTOS and events
 add_subdirectory(cmsis)
@@ -33,3 +30,9 @@ get_property(modules GLOBAL PROPERTY MBED_OS_MODULES)
 foreach(module ${modules})
     add_subdirectory(${module})
 endforeach()
+
+# Link config from generate folder
+# TODO: @mbed-os-tools We need to get this gen_config somehow set up
+target_link_libraries(mbed-os PUBLIC cmsis drivers platform hal events target ${modules} gen_config)
+
+
