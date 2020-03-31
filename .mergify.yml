@@ -189,3 +189,14 @@ pull_request_rules:
       label:
         remove_all: true
 
+# Backport PRs to other branches
+# Note: If there is a conflict in backporting, mergify will signal to PR
+# A user need to create own PR with resolved conflicts
+
+  - name: Backport to 5.15
+    conditions:
+      - merged
+      - "label=release-version-backport: 5.15"
+    actions:
+      backport:
+        branches: mbed-os-5.15
