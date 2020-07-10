@@ -5,6 +5,8 @@
 set(MBED_OS_TOOLCHAIN "GCC_ARM" CACHE STRING "")
 # TODO: @mbed-os-tools - target should come from tools
 set(MBED_OS_TARGET "K64F" CACHE STRING "")
+# TODO: @mbed-os-tools - profile should come from tools
+set(MBED_OS_TOOLCHAIN_PROFILE "DEVELOP" CACHE STRING "")
 
 include(${MBED_OS_ROOT}/cmake/toolchain.cmake)
 include(${MBED_OS_ROOT}/cmake/target.cmake)
