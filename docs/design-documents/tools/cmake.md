@@ -51,7 +51,7 @@ This is not intended to be included by an application.
 
 All the toolchain settings are defined in the scripts found in `cmake/toolchains/`.
 
-### 3. Profile CMake
+### 3. Profile CMake Scripts
 
 The build profiles such as release or debug are defined in the scripts found in `cmake/profiles/`.
 
