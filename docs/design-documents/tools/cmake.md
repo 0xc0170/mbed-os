@@ -78,7 +78,9 @@ The rule of thumb is to not expose header files that are internal. We would like
 
 ## Building an Application
 
-mbed-tools is the next generation mbed-cli. It replaces the current mbed-cli and Mbed OS tools (build system part of Mbed OS).
+`mbed-tools` is the next generation of command line tooling for Mbed OS. `mbed-tools` replaces the `mbed-cli` and the Python modules in the `mbed-os/tools` directory.
+
+`mbed-tools` has consolidated all of the required modules to build Mbed OS, along with the command line interface, into a single Python package which can be installed using standard python packaging tools.
 
 TBD?:
 - configuration
