@@ -47,7 +47,7 @@ The `CMakeLists.txt` entry point in the root of the Mbed OS repository contains 
 
 This is not intended to be included by an application.
 
-### 2. Toolchain CMake
+### 2. Toolchain CMake Scripts
 
 All the toolchain settings are defined in the scripts found in `cmake/toolchains/`.
 
