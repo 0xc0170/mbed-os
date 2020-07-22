@@ -31,7 +31,7 @@ To migrate to the new build system, we can provide auto scanning of the module a
 
 There are numerous CMake files in the Mbed OS repository tree:
 
-* The boiler plate for Mbed OS defined in Mbed OS root (provides way for the build system to overwrite/add configuration)
+* A `CMakeLists.txt` entry point in the Mbed OS root, describing the top level build specification for the Mbed OS source tree.
 * Toolchain settings (toolchain.cmake) - configures the toolchain from cmake/toolchains directory based on the selected toolchain (`MBED_TOOLCHAIN`)
 * Profile configuration (profile.cmake) - configures the profile from cmake/profiles directory based on the selected profile (`MBED_PROFILE`)
 * Core configuration (core.cmake) - configures the core from cmake/cores directory based on the selected target (`MBED_CPU_CORE`)
