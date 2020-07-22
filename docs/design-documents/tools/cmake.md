@@ -76,7 +76,7 @@ include(${MBED_ROOT}/cmake/app.cmake)
 This file statically defines the structure of an Mbed OS component. It also contains conditional statements that are based on the configuration. Regular CMake expressions and Mbed OS functions/macros are used in it to conditionally include/exclude directories.
 The rule of thumb is to not expose header files that are internal. We would like to avoid having everything in the include paths as we do now.
 
-## Building an application
+## Building an Application
 
 mbed-tools is the next generation mbed-cli. It replaces the current mbed-cli and Mbed OS tools (build system part of Mbed OS).
 
