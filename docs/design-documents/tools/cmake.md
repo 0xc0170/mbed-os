@@ -104,7 +104,7 @@ This will output `mbed_config.cmake` in a directory named `.mbedbuild` at the ro
 The tools also generate an `MBED_TARGET_LABELS` variable, containing the labels, components and feature definitions from `targets.json`, used to select the required Mbed OS components to be built.
 
 The macro definitions parsed from the Mbed OS configuration system are also included in `mbed_config.cmake`. The decision was made to remove `mbed_config.h`.
-- mbedignore
+- mbedignore - TBD
 - Application output (what is being generated)
 
 A user create own CMake file to configure an application, also with `mbed_app.json` configuration file. The building of an app would look like:
