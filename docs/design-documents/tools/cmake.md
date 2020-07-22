@@ -71,7 +71,7 @@ The CMake script that must be included by all applications using:
 include(${MBED_ROOT}/cmake/app.cmake)
 ```
 
-### 7. Component CMake
+### 7. Component `CMakeLists.txt` Entry Point
 
 This file statically defines the structure of an Mbed OS component. It also contains conditional statements that are based on the configuration. Regular CMake expressions and Mbed OS functions/macros are used in it to conditionally include/exclude directories.
 The rule of thumb is to not expose header files that are internal. We would like to avoid having everything in the include paths as we do now.
