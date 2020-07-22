@@ -55,7 +55,7 @@ All the toolchain settings are defined in the scripts found in `cmake/toolchains
 
 The build profiles such as release or debug are defined in the scripts found in `cmake/profiles/`.
 
-### 4. MCU core CMake
+### 4. MCU Core CMake Scripts
 
 The MCU core definitions are defined in the scripts found in `cmake/cores/`.
 
