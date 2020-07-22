@@ -105,7 +105,6 @@ The tools also generate an `MBED_TARGET_LABELS` variable, containing the labels,
 
 The macro definitions parsed from the Mbed OS configuration system are also included in `mbed_config.cmake`. The decision was made to remove `mbed_config.h`.
 - mbedignore - TBD
-- Application output (what is being generated)
 
 A user create own CMake file to configure an application, also with `mbed_app.json` configuration file. The building of an app would look like:
 
