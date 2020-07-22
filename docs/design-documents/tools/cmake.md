@@ -78,7 +78,7 @@ The rule of thumb is to not expose header files that are internal. We would like
 
 ## Application CMake
 
-We should provide application CMake functionality with  our own configuration. There are couple of approaches we could take. Statically defined CMake but then this disconnectes config and CMake - as CMake contains configuration for a project (like includes, sources, etc). Our build tool would need to parse CMake to get all paths used in the project or Mbed OS to find out where to look for configuration file. Therefore the build system has a knowledge as it is currently. We use `requires` to include/exclude modules.
+We should provide application CMake functionality with our own configuration. There are couple of approaches we could take. Statically defined CMake but then this disconnectes config and CMake - as CMake contains configuration for a project (like includes, sources, etc). Our build tool would need to parse CMake to get all paths used in the project or Mbed OS to find out where to look for configuration file. Therefore the build system has a knowledge as it is currently. We use `requires` to include/exclude modules.
 
 By default, baremetal would be selected - requires set to hal, platform, drivers and cmsis. If an app needs anything else, would use `requires` in the config to include - BLE/networking/etc.
 
