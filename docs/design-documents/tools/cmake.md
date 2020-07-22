@@ -13,7 +13,7 @@ Definitions and configurations would be defined in CMake files, Mbed app configu
 
 The following rules must be respected for backward compatibility.
 
-We use target labels to include subfolders. A custom CMake function goes through the target labels. If there is a folder in the current CMake source directory matching a target label, it is included. 
+Target labels, components, and features defined in `/path/to/mbed-os/targets/targets.json` are used to help the build system determine which directories contain sources/include files to use in the build process. This is accomplished through a custom CMake function (`mbed_add_cmake_directory_if_labels`) to append a prefix (TARGET_, COMPONENT_ and FEATURE_) and add matching directories to the list of directories to process.
 
 An example, to add `TARGET_STM` in the folder `targets` where we have folders like TARGET_NXP, TARGET_STM, etc:
 
