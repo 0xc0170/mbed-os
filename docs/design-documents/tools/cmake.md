@@ -41,7 +41,7 @@ There are numerous CMake files in the Mbed OS repository tree:
 
 The next sections will describe static CMake files within Mbed OS Core repository.
 
-### 1. Boilerplate CMake
+### 1. Mbed OS `CMakeLists.txt` Entry Point
 
 The main CMakeList file in the Mbed OS repository contains boilerplate required to build Mbed OS. It describes the Mbed OS tree and provides all the options we have in Mbed OS.
 
