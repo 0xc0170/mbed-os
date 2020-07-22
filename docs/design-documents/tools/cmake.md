@@ -32,12 +32,14 @@ To migrate to the new build system, we can provide auto scanning of the module a
 There are numerous CMake files in the Mbed OS repository tree:
 
 * A `CMakeLists.txt` entry point in the Mbed OS root, describing the top level build specification for the Mbed OS source tree.
-* Toolchain settings (toolchain.cmake) - configures the toolchain from cmake/toolchains directory based on the selected toolchain (`MBED_TOOLCHAIN`)
-* Profile configuration (profile.cmake) - configures the profile from cmake/profiles directory based on the selected profile (`MBED_PROFILE`)
-* Core configuration (core.cmake) - configures the core from cmake/cores directory based on the selected target (`MBED_CPU_CORE`)
-* Utilities (util.cmake) - functions or macros we use
-* Application cmake (app.cmake) - the application cmake
-* Each component has a CMakeList file (describing the component - what files are to include, target/feature/component selection based on target, etc)
+* `CMakeLists.txt` entry points in each Mbed OS module subdirectory, describing the build specification for a module or component
+
+A number of CMake scripts are contained in the `mbed-os/cmake` directory:
+* `toolchain.cmake` - selects the toolchain script from the `cmake/toolchains` directory, based on the value of the `MBED_TOOLCHAIN` variable
+* `profile.cmake` - selects the profile script from the `cmake/profiles` directory, based on the value of the `MBED_PROFILE` variable
+* core.cmake` - selects the core script from the `cmake/cores` directory, based on the value of the `MBED_CPU_CORE` variable
+* `util.cmake` - custom CMake helper functions and macros
+* `app.cmake` - contains part of the build specification for an application
 
 The next sections will describe static CMake files within Mbed OS Core repository.
 
