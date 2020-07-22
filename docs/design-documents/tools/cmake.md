@@ -59,7 +59,7 @@ The build profiles such as release or debug are defined in the scripts found in 
 
 The MCU core definitions are defined in the scripts found in `cmake/cores/`.
 
-### 5. Utilities CMake
+### 5. Utilities CMake Scripts
 
 Custom functions/macros used within Mbed OS.
 
