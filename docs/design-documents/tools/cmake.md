@@ -37,7 +37,7 @@ There are numerous CMake files in the Mbed OS repository tree:
 A number of CMake scripts are contained in the `mbed-os/cmake` directory:
 * `toolchain.cmake` - selects the toolchain script from the `cmake/toolchains` directory, based on the value of the `MBED_TOOLCHAIN` variable
 * `profile.cmake` - selects the profile script from the `cmake/profiles` directory, based on the value of the `MBED_PROFILE` variable
-* core.cmake` - selects the core script from the `cmake/cores` directory, based on the value of the `MBED_CPU_CORE` variable
+* `core.cmake` - selects the core script from the `cmake/cores` directory, based on the value of the `MBED_CPU_CORE` variable
 * `util.cmake` - custom CMake helper functions and macros
 * `app.cmake` - contains part of the build specification for an application
 
