@@ -7,7 +7,7 @@ Requirements:
 Two steps approach:
 
 - Mbed OS core CMake
-- Application CMake
+- Building an application with mbed-tools
 
 Definitions and configurations would be defined in CMake files, Mbed app configuration file (`/path/to/app/mbed_app.json`) and Mbed library configuration files (`/path/to/mbed-os/<LIBRARY_NAME>/mbed_lib.json`). The Mbed build system would parse the Mbed configuration files and generate a `CMakeLists.txt` configuration file.
 
@@ -76,17 +76,20 @@ include(${MBED_ROOT}/cmake/app.cmake)
 This file statically defines the structure of an Mbed OS component. It also contains conditional statements that are based on the configuration. Regular CMake expressions and Mbed OS functions/macros are used in it to conditionally include/exclude directories.
 The rule of thumb is to not expose header files that are internal. We would like to avoid having everything in the include paths as we do now.
 
-## Application CMake
+## Building an application
 
-We should provide application CMake functionality with our own configuration. There are couple of approaches we could take. Statically defined CMake but then this disconnectes config and CMake - as CMake contains configuration for a project (like includes, sources, etc). Our build tool would need to parse CMake to get all paths used in the project or Mbed OS to find out where to look for configuration file. Therefore the build system has a knowledge as it is currently. We use `requires` to include/exclude modules.
+mbed-tools is the next generation mbed-cli. It replaces the current mbed-cli and Mbed OS tools (build system part of Mbed OS).
 
-By default, baremetal would be selected - requires set to hal, platform, drivers and cmsis. If an app needs anything else, would use `requires` in the config to include - BLE/networking/etc.
+TBD?:
+- configuration
+- mbedignore
+- Application output (what is being generated)
 
 A user create own CMake file to configure an application, also with `mbed_app.json` configuration file. The building of an app would look like:
 
 1. Parse the arguments provided to build command
-2. Parse the application configuration
-3. Get the target configuration
-4. Get the Mbed OS configuration (select what modules we need and get their config, paths, etc)
-5. Create .mbedbuild/mbed_config.cmake
-6. Build an application
+1. Parse the application configuration
+1. Get the target configuration
+1. Get the Mbed OS configuration (select what modules we need and get their config, paths, etc)
+1. Create .mbedbuild/mbed_config.cmake
+1. Build an application
