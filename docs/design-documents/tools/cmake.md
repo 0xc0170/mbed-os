@@ -85,7 +85,25 @@ The rule of thumb is to not expose header files that are internal. We would like
 `mbed-tools` has consolidated all of the required modules to build Mbed OS, along with the command line interface, into a single Python package which can be installed using standard python packaging tools.
 
 TBD?:
-- configuration
+### Configuration
+
+The main purpose of `mbed-tools` is to parse the Mbed configuration system's JSON files (`mbed_lib.json`, `mbed_app.json` and `targets.json`). The tool outputs a single CMake configuration script, which is included by `app.cmake` and `mbed-os/CMakeLists.txt`.
+
+To generate the CMake config script (named `mbed_config.cmake`) the user can run the `configure` command:
+
+`mbedtools configure -t <toolchain> -m <target>`
+
+This will output `mbed_config.cmake` in a directory named `.mbedbuild` at the root of the program tree.
+
+`mbed_config.cmake` contains several variable definitions used to select the toolchain, core and profile CMake scripts to be used in the build system generation:
+* `MBED_TOOLCHAIN`
+* `MBED_TARGET`
+* `MBED_CPU_CORE`
+* `MBED_PROFILE`
+
+The tools also generate an `MBED_TARGET_LABELS` variable, containing the labels, components and feature definitions from `targets.json`, used to select the required Mbed OS components to be built.
+
+The macro definitions parsed from the Mbed OS configuration system are also included in `mbed_config.cmake`. The decision was made to remove `mbed_config.h`.
 - mbedignore
 - Application output (what is being generated)
 
