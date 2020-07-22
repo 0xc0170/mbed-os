@@ -15,11 +15,13 @@ The following rules must be respected for backward compatibility.
 
 We use target labels to include subfolders. A custom CMake function goes through the target labels. If there is a folder in the current CMake source directory matching a target label, it is included. 
 
-An example, to add `TARGET_STM` in the a folder `targets`:
+An example, to add `TARGET_STM` in the folder `targets` where we have folders like TARGET_NXP, TARGET_STM, etc:
 
 ```
 mbed_add_cmake_directory_if_labels("TARGET")
 ```
+
+If a user selects for example target `NUCLEO_F411RE`, the target defines the label `STM`. As result, the target folder STM is included.
 
 The same could be applied to other labels like features or components.
 
