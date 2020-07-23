@@ -7,13 +7,6 @@ include(${MBED_ROOT}/cmake/util.cmake)
 include(${MBED_ROOT}/cmake/core.cmake)
 include(${MBED_ROOT}/cmake/profile.cmake)
 
-# if the environment does not specify build type, set to Debug
-if(NOT CMAKE_BUILD_TYPE)
-set(CMAKE_BUILD_TYPE "RelWithDebInfo"
-        CACHE STRING "Choose the type of build, options are: Debug Release RelWithDebInfo MinSizeRel."
-        FORCE)
-endif()
-
 # Create application executable
 add_executable(app)
 
