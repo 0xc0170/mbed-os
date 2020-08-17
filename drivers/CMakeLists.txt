@@ -1,7 +1,11 @@
 # Copyright (c) 2020 ARM Limited. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
 
-target_include_directories(mbed-os
+add_library(drivers STATIC)
+
+include(${MBED_CONFIG_PATH}/mbed_config.cmake)
+
+target_include_directories(drivers
     PUBLIC
         ${CMAKE_CURRENT_SOURCE_DIR}
         ${CMAKE_CURRENT_SOURCE_DIR}/include
@@ -9,7 +13,7 @@ target_include_directories(mbed-os
         ${CMAKE_CURRENT_SOURCE_DIR}/include/drivers/internal
 )
 
-target_sources(mbed-os
+target_sources(drivers
     PRIVATE
         source/AnalogIn.cpp
         source/AnalogOut.cpp

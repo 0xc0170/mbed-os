@@ -1,7 +1,7 @@
 # Copyright (c) 2020 ARM Limited. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
 
-target_sources(mbed-os
+target_sources(targets
     PRIVATE
         fsl_common.c
 
@@ -20,7 +20,7 @@ target_sources(mbed-os
         api/sleep.c
 )
 
-target_include_directories(mbed-os
+target_include_directories(targets
     PUBLIC
         api
 )

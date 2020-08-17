@@ -1,6 +1,10 @@
 # Copyright (c) 2020 ARM Limited. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
 
+add_library(rtos STATIC)
+
+include(${MBED_CONFIG_PATH}/mbed_config.cmake)
+
 add_subdirectory(source/TARGET_CORTEX)
 
 target_include_directories(mbed-os
@@ -21,4 +25,10 @@ target_sources(mbed-os
         source/Semaphore.cpp
         source/ThisThread.cpp
         source/Thread.cpp
+)
+
+target_link_libraries(events 
+    PUBLIC
+        targets
+        platform
 )

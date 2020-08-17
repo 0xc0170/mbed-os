@@ -3,12 +3,12 @@
 
 mbed_add_cmake_directory_if_labels("TARGET")
 
-target_include_directories(mbed-os
+target_include_directories(targets
     PUBLIC
         ${CMAKE_CURRENT_SOURCE_DIR}
 )
 
-target_sources(mbed-os
+target_sources(targets
     PRIVATE
         USBPhy_Kinetis.cpp
 )

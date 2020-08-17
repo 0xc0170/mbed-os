@@ -4,7 +4,7 @@ add_subdirectory(device)
 
 mbed_add_cmake_directory_if_labels("TARGET")
 
-target_sources(mbed-os
+target_sources(targets
     PRIVATE
         mbed_crc_api.c
         pwmout_api.c
@@ -54,7 +54,7 @@ target_sources(mbed-os
         drivers/fsl_wdog.c
 )
 
-target_include_directories(mbed-os
+target_include_directories(targets
     PUBLIC
         ${CMAKE_CURRENT_SOURCE_DIR}
         drivers

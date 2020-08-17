@@ -1,11 +1,15 @@
 # Copyright (c) 2020 ARM Limited. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
 
+add_library(platform STATIC)
+
+include(${MBED_CONFIG_PATH}/mbed_config.cmake)
+
 add_subdirectory(cxxsupport)
 add_subdirectory(source/TARGET_CORTEX_M)
 add_subdirectory(source/minimal-printf)
 
-target_include_directories(mbed-os
+target_include_directories(platform
     PUBLIC
         ${CMAKE_CURRENT_SOURCE_DIR}
         ${CMAKE_CURRENT_SOURCE_DIR}/include
@@ -14,7 +18,7 @@ target_include_directories(mbed-os
         ${CMAKE_CURRENT_SOURCE_DIR}/source
 )
 
-target_sources(mbed-os
+target_sources(platform
     PRIVATE
         source/ATCmdParser.cpp
         source/CThunkBase.cpp
@@ -49,4 +53,10 @@ target_sources(mbed-os
         source/mbed_stats.c
         source/mbed_thread.cpp
         source/mbed_wait_api_no_rtos.c
+)
+
+target_link_libraries(platform 
+    PUBLIC
+        targets
+        rtos
 )
