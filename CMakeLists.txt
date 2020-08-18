@@ -53,6 +53,8 @@ add_subdirectory(hal)
 add_subdirectory(rtos)
 add_subdirectory(drivers)
 
+#add_subdirectory(storage)
+
 target_link_libraries(mbed-os 
     PUBLIC
         cmsis
@@ -62,12 +64,12 @@ target_link_libraries(mbed-os
         hal
         rtos
         targets
+        #storage
 )
 
 #add_subdirectory(components)
 #add_subdirectory(connectivity)
 #add_subdirectory(features)
-#add_subdirectory(storage)
 
 
 #
