@@ -5,6 +5,8 @@ target_include_directories(mbed-os
     PUBLIC
         ${CMAKE_CURRENT_SOURCE_DIR}
         usb
+        hal/include
+        hal/include/hal
 )
 
 target_sources(mbed-os
