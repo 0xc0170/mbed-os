@@ -18,7 +18,7 @@
 #include <stdarg.h>
 #include <string.h>
 #include "device.h"
-#include "platform/source/mbed_crash_data_offsets.h"
+#include "source/mbed_crash_data_offsets.h"
 #include "platform/mbed_atomic.h"
 #include "platform/mbed_critical.h"
 #include "platform/mbed_error.h"
