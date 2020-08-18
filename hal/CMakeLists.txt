@@ -40,3 +40,9 @@ target_sources(hal
 
         usb/mbed_usb_phy.cpp
 )
+
+target_link_libraries(hal 
+    PUBLIC
+        targets
+)
+
