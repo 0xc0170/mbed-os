@@ -7,7 +7,7 @@ include(${MBED_CONFIG_PATH}/mbed_config.cmake)
 
 add_subdirectory(source/TARGET_CORTEX)
 
-target_include_directories(mbed-os
+target_include_directories(rtos
     PUBLIC
         ${CMAKE_CURRENT_SOURCE_DIR}
         ${CMAKE_CURRENT_SOURCE_DIR}/include
@@ -16,7 +16,7 @@ target_include_directories(mbed-os
         ${CMAKE_CURRENT_SOURCE_DIR}/source
 )
 
-target_sources(mbed-os
+target_sources(rtos
     PRIVATE
         source/ConditionVariable.cpp
         source/EventFlags.cpp
@@ -27,7 +27,7 @@ target_sources(mbed-os
         source/Thread.cpp
 )
 
-target_link_libraries(events 
+target_link_libraries(rtos 
     PUBLIC
         targets
         platform

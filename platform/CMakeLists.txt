@@ -57,6 +57,7 @@ target_sources(platform
 
 target_link_libraries(platform 
     PUBLIC
-        targets
         rtos
+        hal
+        targets
 )

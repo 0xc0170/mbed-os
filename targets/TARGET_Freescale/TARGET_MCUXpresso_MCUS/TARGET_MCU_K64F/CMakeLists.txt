@@ -2,8 +2,6 @@
 
 add_subdirectory(device)
 
-mbed_add_cmake_directory_if_labels("TARGET")
-
 target_sources(targets
     PRIVATE
         mbed_crc_api.c
@@ -59,3 +57,6 @@ target_include_directories(targets
         ${CMAKE_CURRENT_SOURCE_DIR}
         drivers
 )
+
+#mbed_add_cmake_directory_if_labels("TARGET")
+

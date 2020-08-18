@@ -45,25 +45,29 @@ target_include_directories(mbed-os
 )
 
 # Mbed OS libraries
+add_subdirectory(targets)
 add_subdirectory(cmsis)
 add_subdirectory(events)
 add_subdirectory(platform)
+add_subdirectory(hal)
+add_subdirectory(rtos)
+add_subdirectory(drivers)
 
 target_link_libraries(mbed-os 
     PUBLIC
         cmsis
         events
         platform
+        drivers
+        hal
+        rtos
+        targets
 )
 
 #add_subdirectory(components)
 #add_subdirectory(connectivity)
-add_subdirectory(drivers)
 #add_subdirectory(features)
-add_subdirectory(hal)
-add_subdirectory(rtos)
 #add_subdirectory(storage)
-add_subdirectory(targets)
 
 
 #

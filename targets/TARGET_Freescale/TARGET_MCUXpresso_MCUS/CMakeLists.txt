@@ -25,4 +25,4 @@ target_include_directories(targets
         api
 )
 
-mbed_add_cmake_directory_if_labels("TARGET")
+#mbed_add_cmake_directory_if_labels("TARGET")

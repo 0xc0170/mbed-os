@@ -36,7 +36,7 @@ target_sources(drivers
         source/PwmOut.cpp
         source/QSPI.cpp
         source/ResetReason.cpp
-        source/SFDP.cpp
+        #source/SFDP.cpp
         source/SPI.cpp
         source/SPISlave.cpp
         source/SerialBase.cpp
@@ -66,4 +66,13 @@ target_sources(drivers
         source/usb/USBMouse.cpp
         source/usb/USBMouseKeyboard.cpp
         source/usb/USBSerial.cpp
+)
+
+target_link_libraries(drivers 
+    PUBLIC
+        platform
+        rtos
+        hal
+        targets
+        events
 )
