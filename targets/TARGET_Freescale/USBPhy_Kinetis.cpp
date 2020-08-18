@@ -25,6 +25,8 @@
 #include "USBPhyHw.h"
 #include "USBEndpoints_Kinetis.h"
 #include "mbed_critical.h"
+#include "mbed_toolchain.h"
+#include "platform/mbed_power_mgmt.h"
 
 static USBPhyHw *instance;
 
