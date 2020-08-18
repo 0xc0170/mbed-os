@@ -5,11 +5,14 @@ add_library(events STATIC)
 
 include(${MBED_CONFIG_PATH}/mbed_config.cmake)
 
-#include(${MBED_ROOT}/cmake/toolchain.cmake)
-#mbed_set_toolchain_options(events)
+include(${MBED_ROOT}/cmake/core.cmake)
+mbed_set_cpu_core_options(events ${MBED_TOOLCHAIN})
 
-#include(${MBED_ROOT}/cmake/profile.cmake)
-#mbed_set_profile_options(events ${MBED_TOOLCHAIN})
+include(${MBED_ROOT}/cmake/toolchain.cmake)
+mbed_set_toolchain_options(events)
+
+include(${MBED_ROOT}/cmake/profile.cmake)
+mbed_set_profile_options(events ${MBED_TOOLCHAIN})
 
 target_include_directories(events
     PUBLIC

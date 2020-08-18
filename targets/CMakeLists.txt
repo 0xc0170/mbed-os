@@ -3,12 +3,15 @@
 
 add_library(targets STATIC)
 
-#include(${MBED_CONFIG_PATH}/mbed_config.cmake)
+include(${MBED_CONFIG_PATH}/mbed_config.cmake)
 
-#include(${MBED_ROOT}/cmake/toolchain.cmake)
+include(${MBED_ROOT}/cmake/core.cmake)
+mbed_set_cpu_core_options(targets ${MBED_TOOLCHAIN})
+
+include(${MBED_ROOT}/cmake/toolchain.cmake)
 mbed_set_toolchain_options(targets)
 
-#include(${MBED_ROOT}/cmake/profile.cmake)
+include(${MBED_ROOT}/cmake/profile.cmake)
 mbed_set_profile_options(targets ${MBED_TOOLCHAIN})
 
 #mbed_add_cmake_directory_if_labels("TARGET")

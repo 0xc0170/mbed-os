@@ -3,6 +3,17 @@
 
 add_library(hal STATIC)
 
+include(${MBED_CONFIG_PATH}/mbed_config.cmake)
+
+include(${MBED_ROOT}/cmake/core.cmake)
+mbed_set_cpu_core_options(hal ${MBED_TOOLCHAIN})
+
+include(${MBED_ROOT}/cmake/toolchain.cmake)
+mbed_set_toolchain_options(hal)
+
+include(${MBED_ROOT}/cmake/profile.cmake)
+mbed_set_profile_options(hal ${MBED_TOOLCHAIN})
+
 target_include_directories(hal
     PUBLIC
         ${CMAKE_CURRENT_SOURCE_DIR}
