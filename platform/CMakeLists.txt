@@ -36,7 +36,6 @@ target_sources(platform
         source/LocalFileSystem.cpp
         source/Stream.cpp
         source/SysTimer.cpp
-        source/mbed_alloc_wrappers.cpp
         source/mbed_application.c
         source/mbed_assert.c
         source/mbed_atomic_impl.c
@@ -58,6 +57,8 @@ target_sources(platform
         source/mbed_stats.c
         source/mbed_thread.cpp
         source/mbed_wait_api_no_rtos.c
+    PUBLIC
+        source/mbed_alloc_wrappers.cpp
 )
 
 target_link_libraries(platform 
