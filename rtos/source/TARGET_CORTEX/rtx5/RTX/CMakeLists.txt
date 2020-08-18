@@ -19,7 +19,7 @@ function(_mbed_get_rtx_assembly toolchain_dir)
             set(STARTUP_RTX_FILE TARGET_RTOS_M4_M7/irq_cm4f.S)
         endif()
 
-        target_sources(mbed-os
+        target_sources(rtos
             PRIVATE
                 Source/${toolchain_dir}/${STARTUP_RTX_FILE}
         )
@@ -29,7 +29,7 @@ endfunction()
 function(_mbed_add_cortexa_handler_if)
     foreach(key ${MBED_TARGET_LABELS})
         if(${key} STREQUAL CORTEX_A)
-            target_sources(mbed-os PRIVATE Config/TARGET_CORTEX_A/handlers.c)
+            target_sources(rtos PRIVATE Config/TARGET_CORTEX_A/handlers.c)
         endif()
     endforeach()
 endfunction()
@@ -45,14 +45,14 @@ elseif(${MBED_TOOLCHAIN} STREQUAL "IAR")
     _mbed_get_rtx_assembly(TOOLCHAIN_IAR)
 endif()
 
-target_include_directories(mbed-os
+target_include_directories(rtos
     PUBLIC
         Config
         Include
         Source
 )
 
-target_sources(mbed-os
+target_sources(rtos
     PRIVATE
         Config/RTX_Config.c
 

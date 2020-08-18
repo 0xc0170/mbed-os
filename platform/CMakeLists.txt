@@ -5,13 +5,9 @@ add_library(platform STATIC)
 
 include(${MBED_CONFIG_PATH}/mbed_config.cmake)
 
-include(${MBED_ROOT}/cmake/core.cmake)
 mbed_set_cpu_core_options(platform ${MBED_TOOLCHAIN})
-
-include(${MBED_ROOT}/cmake/toolchain.cmake)
 mbed_set_toolchain_options(platform)
-
-include(${MBED_ROOT}/cmake/profile.cmake)
+mbed_set_language_standard(platform)
 mbed_set_profile_options(platform ${MBED_TOOLCHAIN})
 
 add_subdirectory(cxxsupport)

@@ -5,6 +5,11 @@ add_library(rtos STATIC)
 
 include(${MBED_CONFIG_PATH}/mbed_config.cmake)
 
+mbed_set_cpu_core_options(rtos ${MBED_TOOLCHAIN})
+mbed_set_toolchain_options(rtos)
+mbed_set_language_standard(rtos)
+mbed_set_profile_options(rtos ${MBED_TOOLCHAIN})
+
 add_subdirectory(source/TARGET_CORTEX)
 
 target_include_directories(rtos
