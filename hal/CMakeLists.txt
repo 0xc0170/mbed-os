@@ -38,7 +38,7 @@ target_sources(hal
         mpu/mbed_mpu_v7m.c
         mpu/mbed_mpu_v8m.c
 
-        usb/mbed_usb_phy.cpp
+        #usb/mbed_usb_phy.cpp
 )
 
 target_link_libraries(hal 
