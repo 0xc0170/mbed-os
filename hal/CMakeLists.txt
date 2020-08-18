@@ -1,15 +1,17 @@
 # Copyright (c) 2020 ARM Limited. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
 
-target_include_directories(mbed-os
+add_library(hal STATIC)
+
+target_include_directories(hal
     PUBLIC
         ${CMAKE_CURRENT_SOURCE_DIR}
         usb
-        hal/include
-        hal/include/hal
+        include
+        include/hal
 )
 
-target_sources(mbed-os
+target_sources(hal
     PRIVATE
         LowPowerTickerWrapper.cpp
         mbed_compat.c

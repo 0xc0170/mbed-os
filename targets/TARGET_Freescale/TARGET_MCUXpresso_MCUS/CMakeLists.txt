@@ -1,6 +1,9 @@
 # Copyright (c) 2020 ARM Limited. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
 
+# TODO: this needs fixing, the scope does not work
+include(${MBED_CONFIG_PATH}/mbed_config.cmake)
+
 target_sources(targets
     PRIVATE
         fsl_common.c

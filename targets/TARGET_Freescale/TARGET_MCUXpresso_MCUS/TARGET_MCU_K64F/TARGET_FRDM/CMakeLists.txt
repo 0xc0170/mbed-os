@@ -1,5 +1,8 @@
 # SPDX-License-Identifier: Apache-2.0
 
+# TODO: this needs fixing, the scope does not work
+include(${MBED_CONFIG_PATH}/mbed_config.cmake)
+
 target_sources(targets
     PRIVATE
         crc.c
