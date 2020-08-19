@@ -1,0 +1,146 @@
+# Creating components with CMake
+
+One of the main goals to achieve with CMake is to have components in Mbed OS. A modular built allowing users to select what they require, not building everything as we used to with old tools.
+
+## Components in Mbed OS (bare-metal)
+
+Mbed OS consist of:
+- cmsis
+- rtos-api
+- drivers
+- platform
+- hal
+- targets
+
+Their dependencies:
+
+cmsis: 
+None
+
+drivers:
+- platform
+- rtos-api
+- hal
+- targets
+- events
+
+rtos:
+- cmsis
+- targets
+
+rtos-api:
+- targets
+- platform
+
+platform:
+- rtos-api
+- hal
+- targets
+
+hal:
+- targets
+
+targets:
+- hal
+- drivers
+- platform
+- rtos-api
+- cmsis
+
+Breaking the dependencies would be a huge effort and it possibly would result in rewriting these components as they were for years considered as monolitic - having everything available.
+
+These components do not need prefix `mbed-os-` but any other should do to create mbed-os namespace in the libraries. For instance BLE or storage should be named `mbed-os-ble`/`mbed-os-storage`.
+
+## Components as object libraries
+
+CMake provides OBJECT libraries but it does not support circular dependencies that we have in our tree. Therefore we build Mbed OS as whole (all object files combined). Because if the CMake OBJECT libraries limitation, we need to find alternative approach to components.
+
+
+## One object library "mbed-os"
+
+Our current approach on feature-cmake is to use OBJECT libraries. We built almost entire tree of Mbed OS, the number of object files is big. As result building take longer and we have again windows path limitation (one file compilation command is more than 43k characters long).
+
+To address the problem, CMake provides response files. They do not work out of the box as we experienced. Generators support them but they contain bugs. We found at least two bugs in CMake itself (Ninja, Make tested with Gcc Arm and ARMClang). We are still possibly having issues with other generators (more testing is required).
+
+Note, we shall use response files with static libraries or any other solution we choose to avoid path limitation in OS.
+
+These bugs will be fixed eventually. However, we still haven not address the main problem - there are too many objects files to compile. We need a solution to split the tree into components and built only what is required. Therefore response files could be considered as a workaround for now until we get components in CMake.
+
+## Only core libraries built as objects
+
+These components would form mbed-os library built as OBJECT library in CMake:
+- rtos-api
+- drivers
+- hal
+- targets
+- platform
+
+cmsis, events and the rest of components and features would be static libraries. They could be selected by a user and be added on request.
+
+Object libraries would use INTERFACE library to combine all object libraries together and would link with the static libraries, see https://stackoverflow.com/questions/49265945/cmake-append-objects-from-different-cmakelists-txt-into-one-library
+
+## Components as static libraries
+
+It is known problem with static libraries - weakly linked symbols are not resolved with strong symbols as someone would have expected. We have probably above 100 weakly linked symbols, some are vital to our system (retarget, file handling). 
+
+### Using whole-archive/force_load to workaround weak symbols limitation
+
+Toolchains provide a flag to enforce keeping symbols (GCC --whole-archive, clang -force_load). See the issue with forcing linker flag to the components https://github.com/zephyrproject-rtos/zephyr/issues/8441 and https://github.com/zephyrproject-rtos/zephyr/issues/6961 for details. This has drawbacks that will need more research. See also CMake issue https://gitlab.kitware.com/cmake/cmake/-/issues/20078 - not simple to fix in CMake.
+
+### Removing weak symbols
+
+We could find alternative to weak symbols and fix them in our tree one by one. It was already achieved in Mbed OS 3 where we did not support weak symbols. 
+
+### Object files for files with weak symbols
+
+Mbed 2 was released as a library, we provided object files for files that were providing weak symbols (retarget, file handling and others). They were linked together with the mbed library. This however might not be achievable (its implementation in CMake might contain hacks to get other components paths and flags as retarget file depends on multiple other components).
+
+## External components
+
+They will follow Mbed OS (one from above) guideline.
+
+### Tools update to support baremetal build
+
+The baremetal build should just include what is defined in section "Components in Mbed OS". `mbedtools` should provide argument to select baremetal build.
+
+Proposals: 
+
+1. `mbedtools configure -m K64F -t GCC_ARM --baremetal`
+2. The default is bare-metal (component mbed-os is baremetal), adding mbed-os-rtos component or any other component would be up to an application. No additional configuration needed from tools. See "How to select a component" section for details.
+
+Preferred for the upcoming major would be 2nd option.
+
+### Tools update to support C library selection
+
+C library be set to small for bare-metal (newlib-nano for GCC ARM, microlib for ARMClang). Standard would be newlib for GCC ARM, ARM Standard library for ARMClang.
+
+```
+MBED_SET_C_LIB(arg) arg - string (default small, or std (for now only supported))
+
+or
+
+mbed_select_c_lib(), arguments - small or std
+```
+
+This C library selection would be set via mbed_config generated by tools based on app configuration.
+
+```
+# Cache variable
+MBED_SET_PRINTF(arg) arg - string (default minimal-printf, or std (for now only supported))
+
+or
+
+mbed_select_print_lib(), arguments - minimal-printf or std
+```
+
+This printf selection would be set via mbed_config generated by tools based on app configuration.
+
+### How to select a component
+
+CMake provides `target_link_libraries` we use in Mbed OS. The same should be used in the application if additional component should be added or removed.
+
+To add BLE to the application:
+
+```
+target_link_libraries(application mbed-os mbed-os-rtos mbed-os-ble)
+```
