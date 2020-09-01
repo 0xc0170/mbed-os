@@ -43,10 +43,11 @@ function(mbed_set_toolchain_options target)
     )
 
     set(asm_preproc_options
-        "--target=arm-arm-none-eabi -masm=auto -Xpreprocessor -DMBED_CONF_PLATFORM_CRASH_CAPTURE_ENABLED"
+        "--target=arm-arm-none-eabi"
     )
     target_compile_options(${target}
         PUBLIC
+            $<$<COMPILE_LANGUAGE:ASM>:-masm=armasm>
             $<$<COMPILE_LANGUAGE:ASM>:${MBED_STUDIO_ARM_COMPILER}>
             $<$<COMPILE_LANGUAGE:ASM>:${asm_preproc_options}>
     )
