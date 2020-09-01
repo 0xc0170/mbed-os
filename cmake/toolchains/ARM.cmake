@@ -19,20 +19,24 @@ set(_compile_definitions
     "$<TARGET_PROPERTY:mbed-os,COMPILE_DEFINITIONS>"
 )
 
-set(_compile_definitions 
-    "$<$<BOOL:${_compile_definitions}>:-D$<JOIN:${_compile_definitions}\,\", \"-D,>>"
-)
+function(_create_definitions)
+    set(_compile_definitions 
+        "$<$<BOOL:${_compile_definitions}>:-D$<JOIN:${_compile_definitions}\,\", \"-D,>>"
+    )
 
-function(generate_compile_definitions _filename)
-  file(GENERATE OUTPUT "${_filename}" CONTENT "${_compile_definitions}\n")
+    function(generate_compile_definitions _filename)
+      file(GENERATE OUTPUT "${_filename}" CONTENT "${_compile_definitions}\n")
+    endfunction()
+
+    generate_compile_definitions("compile_time_defs.txt")
 endfunction()
 
-generate_compile_definitions("compile_time_defs.txt")
 set(_asm_macros "@compile_time_defs.txt")
 
 
 # Sets toolchain options
 function(mbed_set_toolchain_options target)
+    _create_definitions()
     get_property(mbed_studio_arm_compiler GLOBAL PROPERTY MBED_STUDIO_ARM_COMPILER)
     list(APPEND common_options
         "${mbed_studio_arm_compiler}"
