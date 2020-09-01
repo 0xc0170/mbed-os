@@ -43,7 +43,7 @@ function(mbed_set_toolchain_options target)
     )
 
     set(asm_preproc_options
-        "--target=arm-arm-none-eabi -masm=auto"
+        "--target=arm-arm-none-eabi -masm=auto -Xpreprocessor -DMBED_CONF_PLATFORM_CRASH_CAPTURE_ENABLED"
     )
     target_compile_options(${target}
         PUBLIC
