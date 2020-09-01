@@ -13,6 +13,23 @@ if(MBEDIDE)
     set_property(GLOBAL PROPERTY MBED_STUDIO_ARM_COMPILER "--ide=mbed")
 endif()
 
+# Get compile definitions - we need them for armasm
+# ARMClang does not include defines to assembler as it does not preprocess files by default
+set(_compile_definitions 
+    "$<TARGET_PROPERTY:mbed-os,COMPILE_DEFINITIONS>"
+)
+
+set(_compile_definitions 
+    "$<$<BOOL:${_compile_definitions}>:-D$<JOIN:${_compile_definitions}\,\", \"-D,>>"
+)
+
+function(generate_compile_definitions _filename)
+  file(GENERATE OUTPUT "${_filename}" CONTENT "${_compile_definitions}\n")
+endfunction()
+
+generate_compile_definitions("compile_time_defs.txt")
+set(_asm_macros "@compile_time_defs.txt")
+
 
 # Sets toolchain options
 function(mbed_set_toolchain_options target)
@@ -47,7 +64,7 @@ function(mbed_set_toolchain_options target)
     )
     target_compile_options(${target}
         PUBLIC
-            $<$<COMPILE_LANGUAGE:ASM>:-masm=armasm>
+            $<$<COMPILE_LANGUAGE:ASM>:-masm=armasm ${_asm_macros}>
             $<$<COMPILE_LANGUAGE:ASM>:${MBED_STUDIO_ARM_COMPILER}>
             $<$<COMPILE_LANGUAGE:ASM>:${asm_preproc_options}>
     )
