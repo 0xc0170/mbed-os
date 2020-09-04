@@ -53,18 +53,15 @@ These components do not need prefix `mbed-os-` but any other should do to create
 
 ## Components as object libraries
 
-CMake provides OBJECT libraries but it does not support circular dependencies that we have in our tree. Therefore we build Mbed OS as whole (all object files combined). Because if the CMake OBJECT libraries limitation, we need to find alternative approach to components.
+CMake provides OBJECT libraries but it does not support circular dependencies that we have in our tree. Because of the CMake OBJECT libraries limitation, we need to find alternative approach to components.
 
+Resolution: not applicable to Mbed OS
 
 ## One object library "mbed-os"
 
-Our current approach on feature-cmake is to use OBJECT libraries. We built almost entire tree of Mbed OS, the number of object files is big. As result building take longer and we have again windows path limitation (one file compilation command is more than 43k characters long).
+Our current approach on feature-cmake is to use OBJECT libraries. We built almost entire tree of Mbed OS (mbed-os library that an application links to via `target_link_library`), the number of object files is big (over 1200 files to compile). As result building takes longer. We need a solution to split the tree into components and built only what is required.
 
-To address the problem, CMake provides response files. They do not work out of the box as we experienced. Generators support them but they contain bugs. We found at least two bugs in CMake itself (Ninja, Make tested with Gcc Arm and ARMClang). We are still possibly having issues with other generators (more testing is required).
-
-Note, we shall use response files with static libraries or any other solution we choose to avoid path limitation in OS.
-
-These bugs will be fixed eventually. However, we still haven not address the main problem - there are too many objects files to compile. We need a solution to split the tree into components and built only what is required. Therefore response files could be considered as a workaround for now until we get components in CMake.
+Resolution: not applicable to Mbed OS
 
 ## Only core libraries built as objects
 
@@ -79,25 +76,27 @@ cmsis, events and the rest of components and features would be static libraries.
 
 Object libraries would use INTERFACE library to combine all object libraries together and would link with the static libraries, see https://stackoverflow.com/questions/49265945/cmake-append-objects-from-different-cmakelists-txt-into-one-library
 
+Resolution: this is a workaround rather than a solution. We failed to find a way to do it for rtos component.
+
 ## Components as static libraries
 
-It is known problem with static libraries - weakly linked symbols are not resolved with strong symbols as someone would have expected. We have probably above 100 weakly linked symbols, some are vital to our system (retarget, file handling). 
+It is known problem with static libraries - weakly linked symbols are not resolved with strong symbols as someone would have expected. We have probably above 100 weakly linked symbols, some are vital to our system (retarget, file handling).
+
+We could find alternative to weak symbols and fix them in our tree one by one. It was already achieved in Mbed OS 3 where we did not support weak symbols. 
+
+Resolution: TBD
 
 ### Using whole-archive/force_load to workaround weak symbols limitation
 
 Toolchains provide a flag to enforce keeping symbols (GCC --whole-archive, clang -force_load). See the issue with forcing linker flag to the components https://github.com/zephyrproject-rtos/zephyr/issues/8441 and https://github.com/zephyrproject-rtos/zephyr/issues/6961 for details. This has drawbacks that will need more research. See also CMake issue https://gitlab.kitware.com/cmake/cmake/-/issues/20078 - not simple to fix in CMake.
 
-### Removing weak symbols
+Resolution: TBD
 
-We could find alternative to weak symbols and fix them in our tree one by one. It was already achieved in Mbed OS 3 where we did not support weak symbols. 
-
-### Object files for files with weak symbols
+### Object files only for files with weak symbols
 
 Mbed 2 was released as a library, we provided object files for files that were providing weak symbols (retarget, file handling and others). They were linked together with the mbed library. This however might not be achievable (its implementation in CMake might contain hacks to get other components paths and flags as retarget file depends on multiple other components).
 
-## External components
-
-They will follow Mbed OS (one from above) guideline.
+Resolution: not trivial, it only avoid the main issue (the list of object files would grow and an application would need to do the same if they use weak symbols in their libs)
 
 ### Tools update to support baremetal build
 
