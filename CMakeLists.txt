@@ -155,12 +155,3 @@ function(mbed_generate_bin_hex target)
         VERBATIM
     )
 endfunction()
-
-#
-# Configure Mbed OS CMake application (default).
-#
-function(mbed_configure_application target)
-    mbed_set_language_standard(${target})
-    mbed_set_mbed_target_linker_script(${target})
-    mbed_generate_bin_hex(${target})
-endfunction()
