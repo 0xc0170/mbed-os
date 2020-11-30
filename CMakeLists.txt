@@ -9,8 +9,9 @@ include(${MBED_CONFIG_PATH}/mbed_config.cmake)
 include(${MBED_PATH}/tools/cmake/core.cmake)
 
 add_library(mbed-core INTERFACE)
+add_library(mbed-rtos INTERFACE)
 
-add_library(mbed-os INTERFACE)
+add_library(mbed-os OBJECT EXCLUDE_FROM_ALL dummy_cmake.cpp)
 
 target_link_libraries(mbed-os
     INTERFACE
@@ -18,7 +19,7 @@ target_link_libraries(mbed-os
         mbed-core
 )
 
-add_library(mbed-baremetal INTERFACE)
+add_library(mbed-baremetal OBJECT EXCLUDE_FROM_ALL dummy_cmake.cpp)
 
 target_link_libraries(mbed-baremetal
     INTERFACE
@@ -95,7 +96,6 @@ target_include_directories(mbed-core
 # by libraries that depend on them.
 # TODO CMake: Should the source files be moved?
 add_library(mbed-device_key INTERFACE)
-add_library(mbed-rtos INTERFACE)
 
 add_subdirectory(cmsis)
 add_subdirectory(drivers)
