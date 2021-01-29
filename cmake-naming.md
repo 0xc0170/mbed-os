@@ -33,9 +33,9 @@ CMakelists for each vendor would have the logic to select the proper target. As 
         CMAKE_TARGET = mbed-target-$(mbed_target_get_vendor())-$(mbed_target_get_cmake_name())
     ```
 
-`mbed_target_get_vendor()` contains our vendors supported to return valid vendor name
+`mbed_target_get_vendor()` contains our vendors supported list, returns vendor name
 
-`mbed_target_get_cmake_name()` function would just do string replace, to keep things simple.
+`mbed_target_get_cmake_name()` function would just do string replace, returns CMake target name for specified Mbed OS target
 
 
 ### Footnotes
