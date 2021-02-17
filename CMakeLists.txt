@@ -8,22 +8,75 @@ cmake_minimum_required(VERSION 3.19.0 FATAL_ERROR)
 include(${MBED_CONFIG_PATH}/mbed_config.cmake)
 include(tools/cmake/set_linker_script.cmake)
 
+# Ensure the words that make up the Mbed target name are separated with a hyphen, lowercase, and with the `mbed-` prefix.
+string(TOLOWER ${MBED_TARGET} MBED_TARGET_CONVERTED)
+string(REPLACE "_" "-" MBED_TARGET_CONVERTED ${MBED_TARGET_CONVERTED})
+string(PREPEND MBED_TARGET_CONVERTED "mbed-")
+
 add_library(mbed-core INTERFACE)
 
-add_library(mbed-os INTERFACE)
+add_library(mbed-os OBJECT)
+target_sources(mbed-os PRIVATE dummy.cpp)
 
 target_link_libraries(mbed-os
-    INTERFACE
+    PRIVATE
         mbed-rtos
         mbed-core
+        ${MBED_TARGET_CONVERTED}
 )
 
-add_library(mbed-baremetal INTERFACE)
+# Append the value of PROPERTY from SOURCE to the value of PROPERTY on DESTINATION
+function(copy_append_property PROPERTY SOURCE DESTINATION)
+    get_property(PROP_IS_DEFINED TARGET ${SOURCE} PROPERTY ${PROPERTY} SET)
+    if(PROP_IS_DEFINED)
+        get_property(PROP_VALUE TARGET ${SOURCE} PROPERTY ${PROPERTY})
+        #message("Copying ${PROPERTY} from ${SOURCE} -> ${DESTINATION}: ${PROP_VALUE} ")
+        set_property(TARGET ${DESTINATION} APPEND PROPERTY ${PROPERTY} "${PROP_VALUE}")
+    endif()
+endfunction(copy_append_property)
+
+# We need to expose options that an app might need due to including mbed.h
+# These include:
+#   - compile options
+#   - link options
+#   - preprocessor symbols
+#   - include directories to find headers
+target_compile_options(mbed-os
+    PUBLIC
+        $<TARGET_PROPERTY:mbed-core,INTERFACE_COMPILE_OPTIONS>
+        $<TARGET_PROPERTY:mbed-rtos,INTERFACE_COMPILE_OPTIONS>
+        $<TARGET_PROPERTY:${MBED_TARGET_CONVERTED},INTERFACE_COMPILE_OPTIONS>
+)
+
+target_link_options(mbed-os
+    PUBLIC
+        $<TARGET_PROPERTY:mbed-core,INTERFACE_LINK_OPTIONS>
+        $<TARGET_PROPERTY:mbed-rtos,INTERFACE_LINK_OPTIONS>
+        $<TARGET_PROPERTY:${MBED_TARGET_CONVERTED},INTERFACE_LINK_OPTIONS>
+)
+
+target_compile_definitions(mbed-os
+    PUBLIC
+        $<TARGET_PROPERTY:mbed-core,INTERFACE_COMPILE_DEFINITIONS>
+        $<TARGET_PROPERTY:mbed-rtos,INTERFACE_COMPILE_DEFINITIONS>
+        $<TARGET_PROPERTY:${MBED_TARGET_CONVERTED},INTERFACE_COMPILE_DEFINITIONS>
+)
+
+target_include_directories(mbed-os
+  PUBLIC
+        $<TARGET_PROPERTY:mbed-core,INTERFACE_INCLUDE_DIRECTORIES>
+        $<TARGET_PROPERTY:mbed-rtos,INTERFACE_INCLUDE_DIRECTORIES>
+        $<TARGET_PROPERTY:${MBED_TARGET_CONVERTED},INTERFACE_INCLUDE_DIRECTORIES>
+)
+
+add_library(mbed-baremetal OBJECT)
 
 target_link_libraries(mbed-baremetal
     INTERFACE
         mbed-core
 )
+target_sources(mbed-baremetal PRIVATE dummy.cpp)
+
 # Validate selected C library type
 # The C library type selected has to match the library that the target can support
 if(${MBED_C_LIB} STREQUAL "small")
@@ -132,12 +185,7 @@ add_subdirectory(features EXCLUDE_FROM_ALL)
 add_subdirectory(cmsis/CMSIS_5/CMSIS/RTOS2 EXCLUDE_FROM_ALL)
 add_subdirectory(cmsis/device/rtos EXCLUDE_FROM_ALL)
 
-# Ensure the words that make up the Mbed target name are separated with a hyphen, lowercase, and with the `mbed-` prefix.
-string(TOLOWER ${MBED_TARGET} MBED_TARGET_CONVERTED)
-string(REPLACE "_" "-" MBED_TARGET_CONVERTED ${MBED_TARGET_CONVERTED})
-string(PREPEND MBED_TARGET_CONVERTED "mbed-")
-
-target_link_libraries(mbed-core INTERFACE ${MBED_TARGET_CONVERTED})
+#target_link_libraries(mbed-core PUBLIC ${MBED_TARGET_CONVERTED})
 
 #
 # Configures the application
