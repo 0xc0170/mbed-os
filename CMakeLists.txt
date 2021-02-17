@@ -8,22 +8,26 @@ cmake_minimum_required(VERSION 3.19.0 FATAL_ERROR)
 include(${MBED_CONFIG_PATH}/mbed_config.cmake)
 include(tools/cmake/set_linker_script.cmake)
 
-add_library(mbed-core INTERFACE)
+add_library(mbed-baremetal INTERFACE)
+add_library(mbed-baremetal-obj OBJECT)
+
+# Propagate flags to objects
+target_link_libraries(mbed-baremetal-obj mbed-baremetal)
 
 add_library(mbed-os INTERFACE)
+
+target_sources(mbed-os
+    PRIVATE
+        $<TARGET_OBJECTS:mbed-baremetal-obj>
+        $<TARGET_OBJECTS:mbed-rtos-obj>
+)
 
 target_link_libraries(mbed-os
     INTERFACE
         mbed-rtos
-        mbed-core
+        mbed-baremetal
 )
 
-add_library(mbed-baremetal INTERFACE)
-
-target_link_libraries(mbed-baremetal
-    INTERFACE
-        mbed-core
-)
 # Validate selected C library type
 # The C library type selected has to match the library that the target can support
 if(${MBED_C_LIB} STREQUAL "small")
@@ -52,13 +56,13 @@ if(NOT ${MBED_PRINTF_LIB} IN_LIST MBED_PRINTF_LIB_TYPES)
     )
 endif()
 
-mbed_set_cpu_core_definitions(mbed-core)
+mbed_set_cpu_core_definitions(mbed-baremetal)
 if(${MBED_TOOLCHAIN_FILE_USED})
-    mbed_set_profile_options(mbed-core ${MBED_TOOLCHAIN})
-    mbed_set_c_lib(mbed-core ${MBED_C_LIB})
-    mbed_set_printf_lib(mbed-core ${MBED_PRINTF_LIB})
+    mbed_set_profile_options(mbed-baremetal ${MBED_TOOLCHAIN})
+    mbed_set_c_lib(mbed-baremetal ${MBED_C_LIB})
+    mbed_set_printf_lib(mbed-baremetal ${MBED_PRINTF_LIB})
 
-    target_compile_features(mbed-core
+    target_compile_features(mbed-baremetal
         INTERFACE
             c_std_11
             cxx_std_14
@@ -66,7 +70,7 @@ if(${MBED_TOOLCHAIN_FILE_USED})
 
 endif()
 
-target_compile_definitions(mbed-core
+target_compile_definitions(mbed-baremetal
     INTERFACE
         ${MBED_TARGET_DEFINITIONS}
         ${MBED_CONFIG_DEFINITIONS}
@@ -83,27 +87,27 @@ target_compile_definitions(mbed-core
 #
 # TODO: Remove this and find a more idiomatic way of passing compile definitions to CPP without
 # using response files or global properties.
-mbed_generate_options_for_linker(mbed-core RESPONSE_FILE_PATH)
+mbed_generate_options_for_linker(mbed-baremetal RESPONSE_FILE_PATH)
 set_property(GLOBAL PROPERTY COMPILE_DEFS_RESPONSE_FILE ${RESPONSE_FILE_PATH})
 
 # Add compile definitions for backward compatibility with the toolchain
 # supported. New source files should instead check for __GNUC__ and __clang__
 # for the GCC_ARM and ARM toolchains respectively.
 if(${MBED_TOOLCHAIN} STREQUAL "GCC_ARM")
-    target_compile_definitions(mbed-core
+    target_compile_definitions(mbed-baremetal
         INTERFACE
             TOOLCHAIN_GCC_ARM
             TOOLCHAIN_GCC
     )
 elseif(${MBED_TOOLCHAIN} STREQUAL "ARM")
-    target_compile_definitions(mbed-core
+    target_compile_definitions(mbed-baremetal
         INTERFACE
             TOOLCHAIN_ARM
     )
 endif()
 
 # Include mbed.h and config from generate folder
-target_include_directories(mbed-core
+target_include_directories(mbed-baremetal
     INTERFACE
         ${CMAKE_CURRENT_SOURCE_DIR}
 )
@@ -113,7 +117,9 @@ target_include_directories(mbed-core
 # by libraries that depend on them.
 # TODO CMake: Should the source files be moved?
 add_library(mbed-device_key INTERFACE)
+
 add_library(mbed-rtos INTERFACE)
+add_library(mbed-rtos-obj OBJECT)
 
 add_subdirectory(cmsis)
 add_subdirectory(drivers)
@@ -137,7 +143,7 @@ string(TOLOWER ${MBED_TARGET} MBED_TARGET_CONVERTED)
 string(REPLACE "_" "-" MBED_TARGET_CONVERTED ${MBED_TARGET_CONVERTED})
 string(PREPEND MBED_TARGET_CONVERTED "mbed-")
 
-target_link_libraries(mbed-core INTERFACE ${MBED_TARGET_CONVERTED})
+target_link_libraries(mbed-baremetal INTERFACE ${MBED_TARGET_CONVERTED})
 
 #
 # Configures the application
@@ -148,7 +154,7 @@ function(mbed_configure_app_target target)
     # TODO: move this to toolchain and set properly
     if(MBED_TOOLCHAIN STREQUAL "GCC_ARM")
         message(${target})
-        target_link_options(mbed-core
+        target_link_options(mbed-baremetal
             INTERFACE
                 "-Wl,-Map=${CMAKE_CURRENT_BINARY_DIR}/${target}${CMAKE_EXECUTABLE_SUFFIX}.map"
         )

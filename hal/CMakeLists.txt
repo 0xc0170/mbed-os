@@ -7,14 +7,14 @@ endif()
 
 add_subdirectory(usb)
 
-target_include_directories(mbed-core
+target_include_directories(mbed-baremetal
     INTERFACE
         include
         include/hal
 )
 
-target_sources(mbed-core
-    INTERFACE
+target_sources(mbed-baremetal-obj
+    PRIVATE
         source/LowPowerTickerWrapper.cpp
         source/mbed_compat.c
         source/mbed_critical_section_api.c

@@ -3,13 +3,13 @@
 
 add_subdirectory(source)
 
-target_include_directories(mbed-core
+target_include_directories(mbed-baremetal
     INTERFACE
         include
         include/mbed-trace
 )
 
-target_sources(mbed-core
-    INTERFACE
+target_sources(mbed-baremetal-obj
+    PRIVATE
         source/mbed_trace.c
 )

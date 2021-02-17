@@ -23,5 +23,5 @@ target_compile_definitions(mbed-cellular
 target_link_libraries(mbed-cellular
     INTERFACE
         mbed-netsocket
-        mbed-core
+        mbed-baremetal
 )

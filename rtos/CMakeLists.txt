@@ -1,7 +1,7 @@
 # Copyright (c) 2020 ARM Limited. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
 
-target_include_directories(mbed-core
+target_include_directories(mbed-baremetal
     INTERFACE
         .
         ./include
@@ -10,8 +10,8 @@ target_include_directories(mbed-core
         ./source
 )
 
-target_sources(mbed-core
-    INTERFACE
+target_sources(mbed-baremetal-obj
+    PRIVATE
         source/EventFlags.cpp
         source/Kernel.cpp
         source/Mutex.cpp
@@ -22,7 +22,7 @@ target_sources(mbed-core
 )
 
 
-target_compile_definitions(mbed-core
+target_compile_definitions(mbed-baremetal
     INTERFACE
         MBED_CONF_RTOS_API_PRESENT=1
 )

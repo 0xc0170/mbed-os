@@ -13,7 +13,7 @@ add_subdirectory(mbed-trace)
 add_subdirectory(randlib)
 add_subdirectory(source)
 
-target_include_directories(mbed-core
+target_include_directories(mbed-baremetal
     INTERFACE
         include
         include/platform

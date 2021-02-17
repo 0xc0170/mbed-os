@@ -9,13 +9,13 @@ endif()
 
 add_subdirectory(minimal-printf)
 
-target_include_directories(mbed-core
+target_include_directories(mbed-baremetal
     INTERFACE
         .
 )
 
-target_sources(mbed-core
-    INTERFACE
+target_sources(mbed-baremetal-obj
+    PRIVATE
         ATCmdParser.cpp
         CThunkBase.cpp
         CriticalSectionLock.cpp
