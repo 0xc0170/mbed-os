@@ -48,12 +48,22 @@ target_include_directories(mbed-os
 )
 ```
 
-This is similar approach to what Jamie proposed with `mbed_create_distro`. Each Mbed OS target would need to do similar.
+This is similar approach to what Jamie proposed with `mbed_create_distro`. Each Mbed OS CMake target would need to do similar (mbed-ble, mbed-nanostack, etc).
 
 ## Converting our CMake targets to OBJECTS
 
-This is cleaner way to achieve the goal but it requires our targets to be separted into objects and flags targets. 
-Objects would contain sources that are built just once. And flags targets would be available to an application.
+This is cleaner way to achieve the goal but it requires our targets to be separted into objects and flags targets.
+
+Each CMake target would create xxx-flags and xxx-obj libraries.
+
+```
+# Contains everything but not sources
+add_library(xxx-flags INTERFACE)
+# Contains sources
+add_libarry(xxx-obj OBJECT)
+```
+
+This is taken from Jamies prototype to illustrate how mbed-os/mbed-baremetal are formed.
 
 ```
 # Interface library storing all needed flags, definitions, and includes for building with mbed-os.
@@ -86,7 +96,14 @@ target_sources(mbed-os INTERFACE $<TARGET_OBJECTS:mbed-os-obj>)
 target_link_libraries(mbed-os INTERFACE mbed-base-flags mbed-rtos-flags)
 ```
 
-This will require to workaround our circular deps in our tree as CMake does not allow it with OBJECT libraries (it does for STATIC). This is known limitation and it might be fixed on day. For now we will need to do:
+There are at least 2 issue we need to work around.
+
+1. Circular deps not supported with object libraries in CMake. Known issue that might be fixed one day.
+2. Our mbed-rtos library affects the core (files check for `MBED_CONF_RTOS_PRESENT`)
+
+Both were addressed by Jamie in some way to overcome these. 
+
+To fix circular deps:
 
 ```
 # work around circular reference with kvstore (CMake doesn't allow object libraries to link circularly)
@@ -95,4 +112,3 @@ target_link_libraries(mbed-device_key INTERFACE mbed-storage-kvstore)
 target_compile_definitions(mbed-device_key PRIVATE $<TARGET_PROPERTY:mbed-storage-kvstore,COMPILE_DEFINITIONS>)
 target_include_directories(mbed-device_key PRIVATE $<TARGET_PROPERTY:mbed-storage-kvstore,INCLUDE_DIRECTORIES>)
 ```
-
