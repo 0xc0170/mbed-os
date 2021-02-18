@@ -7,13 +7,16 @@ add_subdirectory(TARGET_MAX32625 EXCLUDE_FROM_ALL)
 add_subdirectory(TARGET_MAX32630 EXCLUDE_FROM_ALL)
 
 add_library(mbed-maxim INTERFACE)
+add_library(mbed-maxim-obj OBJECT)
 
 target_include_directories(mbed-maxim
     INTERFACE
         .
 )
 
-target_sources(mbed-maxim
-    INTERFACE
+target_sources(mbed-maxim-obj
+    PRIVATE
         USBPhy_Maxim.cpp
 )
+
+target_link_libraries(mbed-maxim-obj mbed-maxim)

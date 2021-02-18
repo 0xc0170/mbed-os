@@ -8,18 +8,35 @@ cmake_minimum_required(VERSION 3.19.0 FATAL_ERROR)
 include(${MBED_CONFIG_PATH}/mbed_config.cmake)
 include(tools/cmake/set_linker_script.cmake)
 
-add_library(mbed-baremetal INTERFACE)
-add_library(mbed-baremetal-obj OBJECT)
+# Ensure the words that make up the Mbed target name are separated with a hyphen, lowercase, and with the `mbed-` prefix.
+string(TOLOWER ${MBED_TARGET} MBED_TARGET_CONVERTED)
+string(REPLACE "_" "-" MBED_TARGET_CONVERTED ${MBED_TARGET_CONVERTED})
+string(PREPEND MBED_TARGET_CONVERTED "mbed-")
 
-# Propagate flags to objects
-target_link_libraries(mbed-baremetal-obj mbed-baremetal)
+add_library(mbed-baremetal INTERFACE)
+add_library(mbed-baremetal-obj OBJECT EXCLUDE_FROM_ALL)
+
+# Link Mbed OS target to baremetal
+target_link_libraries(mbed-baremetal INTERFACE ${MBED_TARGET_CONVERTED})
+target_link_libraries(mbed-baremetal-obj mbed-baremetal ${MBED_TARGET_CONVERTED})
+
+add_library(mbed-os-obj OBJECT EXCLUDE_FROM_ALL)
+target_link_libraries(mbed-os-obj mbed-baremetal mbed-rtos)
+
+# copy all baremetal + targets sources to mbed-os
+get_property(MBED_BAREMETAL_SOURCES TARGET mbed-baremetal-obj PROPERTY SOURCES)
+
+target_sources(mbed-os-obj 
+    PRIVATE 
+        ${MBED_BAREMETAL_SOURCES}
+)
 
 add_library(mbed-os INTERFACE)
 
 target_sources(mbed-os
-    PRIVATE
-        $<TARGET_OBJECTS:mbed-baremetal-obj>
-        $<TARGET_OBJECTS:mbed-rtos-obj>
+    INTERFACE
+        $<TARGET_OBJECTS:mbed-os-obj>
+        $<TARGET_OBJECTS:${MBED_TARGET_CONVERTED}-obj>
 )
 
 target_link_libraries(mbed-os
@@ -119,7 +136,6 @@ target_include_directories(mbed-baremetal
 add_library(mbed-device_key INTERFACE)
 
 add_library(mbed-rtos INTERFACE)
-add_library(mbed-rtos-obj OBJECT)
 
 add_subdirectory(cmsis)
 add_subdirectory(drivers)
@@ -137,13 +153,6 @@ add_subdirectory(drivers/usb EXCLUDE_FROM_ALL)
 add_subdirectory(features EXCLUDE_FROM_ALL)
 add_subdirectory(cmsis/CMSIS_5/CMSIS/RTOS2 EXCLUDE_FROM_ALL)
 add_subdirectory(cmsis/device/rtos EXCLUDE_FROM_ALL)
-
-# Ensure the words that make up the Mbed target name are separated with a hyphen, lowercase, and with the `mbed-` prefix.
-string(TOLOWER ${MBED_TARGET} MBED_TARGET_CONVERTED)
-string(REPLACE "_" "-" MBED_TARGET_CONVERTED ${MBED_TARGET_CONVERTED})
-string(PREPEND MBED_TARGET_CONVERTED "mbed-")
-
-target_link_libraries(mbed-baremetal INTERFACE ${MBED_TARGET_CONVERTED})
 
 #
 # Configures the application
