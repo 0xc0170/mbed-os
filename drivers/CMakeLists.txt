@@ -13,8 +13,8 @@ target_include_directories(mbed-core
         ./include/drivers/internal
 )
 
-target_sources(mbed-core
-    INTERFACE
+target_sources(mbed-core-obj
+    PRIVATE
         source/AnalogIn.cpp
         source/AnalogOut.cpp
         source/BufferedSerial.cpp
