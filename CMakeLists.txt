@@ -173,14 +173,13 @@ add_subdirectory(features EXCLUDE_FROM_ALL)
 add_subdirectory(cmsis/CMSIS_5/CMSIS/RTOS2 EXCLUDE_FROM_ALL)
 add_subdirectory(cmsis/device/rtos EXCLUDE_FROM_ALL)
 
-
 if(${CMAKE_CROSSCOMPILING})
     # Ensure the words that make up the Mbed target name are separated with a hyphen, lowercase, and with the `mbed-` prefix.
     string(TOLOWER ${MBED_TARGET} MBED_TARGET_CONVERTED)
     string(REPLACE "_" "-" MBED_TARGET_CONVERTED ${MBED_TARGET_CONVERTED})
     string(PREPEND MBED_TARGET_CONVERTED "mbed-")
-    
-    target_link_libraries(mbed-core INTERFACE ${MBED_TARGET_CONVERTED})
+
+    target_link_libraries(mbed-core-obj PRIVATE ${MBED_TARGET_CONVERTED})
 endif()
 
 #

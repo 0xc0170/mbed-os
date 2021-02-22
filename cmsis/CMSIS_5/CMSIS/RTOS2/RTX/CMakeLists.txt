@@ -50,8 +50,8 @@ target_include_directories(mbed-rtos
         Source
 )
 
-target_sources(mbed-rtos
-    INTERFACE
+target_sources(mbed-rtos-obj
+    PRIVATE
         Config/RTX_Config.c
 
         Library/cmsis_os1.c
