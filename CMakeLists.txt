@@ -33,20 +33,12 @@ string(PREPEND MBED_TARGET_CONVERTED "mbed-")
 add_library(mbed-core INTERFACE)
 add_library(mbed-core-obj OBJECT)
 
-set_property(TARGET mbed-core PROPERTY INTERFACE_SOURCES $<TARGET_OBJECTS:mbed-core-obj>)
-
-foreach(options COMPILE_DEFINITIONS COMPILE_FEATURES COMPILE_OPTIONS INCLUDE_DIRECTORIES LINK_LIBRARIES)
-    set_target_properties(mbed-core-obj PROPERTIES ${options} $<TARGET_PROPERTY:mbed-core,INTERFACE_${options}>)
-endforeach()
+mbed_attach_object_lib_with_interface_lib(mbed-core)
 
 add_library(mbed-os INTERFACE)
 add_library(mbed-os-obj OBJECT EXCLUDE_FROM_ALL)
 
-set_property(TARGET mbed-os PROPERTY INTERFACE_SOURCES $<TARGET_OBJECTS:mbed-os-obj>)
-
-foreach(options COMPILE_DEFINITIONS COMPILE_FEATURES COMPILE_OPTIONS INCLUDE_DIRECTORIES LINK_LIBRARIES)
-    set_target_properties(mbed-os-obj PROPERTIES ${options} $<TARGET_PROPERTY:mbed-os,INTERFACE_${options}>)
-endforeach()
+mbed_attach_object_lib_with_interface_lib(mbed-os)
 
 target_link_libraries(mbed-os
     INTERFACE
@@ -166,11 +158,7 @@ add_library(mbed-device_key INTERFACE)
 add_library(mbed-rtos INTERFACE)
 add_library(mbed-rtos-obj OBJECT)
 
-set_property(TARGET mbed-rtos PROPERTY INTERFACE_SOURCES $<TARGET_OBJECTS:mbed-rtos-obj>)
-
-foreach(options COMPILE_DEFINITIONS COMPILE_FEATURES COMPILE_OPTIONS INCLUDE_DIRECTORIES LINK_LIBRARIES)
-    set_target_properties(mbed-rtos-obj PROPERTIES ${options} $<TARGET_PROPERTY:mbed-rtos,INTERFACE_${options}>)
-endforeach()
+mbed_attach_object_lib_with_interface_lib(mbed-rtos)
 
 add_subdirectory(cmsis)
 add_subdirectory(drivers)
@@ -190,12 +178,7 @@ add_subdirectory(cmsis/CMSIS_5/CMSIS/RTOS2 EXCLUDE_FROM_ALL)
 add_subdirectory(cmsis/device/rtos EXCLUDE_FROM_ALL)
 
 if(${CMAKE_CROSSCOMPILING})
-    #target_link_libraries(mbed-core-obj PRIVATE ${MBED_TARGET_CONVERTED})
-    set_property(TARGET mbed-core-obj PROPERTY INTERFACE_SOURCES $<TARGET_OBJECTS:${MBED_TARGET_CONVERTED}>)
-
-    foreach(options COMPILE_DEFINITIONS COMPILE_FEATURES COMPILE_OPTIONS INCLUDE_DIRECTORIES LINK_LIBRARIES)
-        set_target_properties(mbed-core-obj PROPERTIES ${options} $<TARGET_PROPERTY:${MBED_TARGET_CONVERTED},INTERFACE_${options}>)
-    endforeach()
+    target_link_libraries(mbed-core-obj PRIVATE ${MBED_TARGET_CONVERTED})
 endif()
 
 #
