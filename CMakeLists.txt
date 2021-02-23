@@ -44,8 +44,10 @@ target_link_libraries(mbed-os
     INTERFACE
         mbed-rtos
         mbed-core
-        ${MBED_TARGET_CONVERTED}
 )
+
+# Expose target headers to an app, but hide objects as they are part of mbed-core
+target_include_directories(mbed-os INTERFACE $<TARGET_PROPERTY:${MBED_TARGET_CONVERTED},INTERFACE_INCLUDE_DIRECTORIES>)
 
 add_library(mbed-baremetal INTERFACE)
 
@@ -166,9 +168,6 @@ add_subdirectory(hal)
 add_subdirectory(platform)
 add_subdirectory(rtos)
 
-# Target provides includes for core to find device.h/cmsis.h or nvic related files
-add_library(${MBED_TARGET_CONVERTED}-core INTERFACE)
-
 add_subdirectory(targets)
 add_subdirectory(storage)
 add_subdirectory(events)
@@ -181,10 +180,11 @@ add_subdirectory(features EXCLUDE_FROM_ALL)
 add_subdirectory(cmsis/CMSIS_5/CMSIS/RTOS2 EXCLUDE_FROM_ALL)
 add_subdirectory(cmsis/device/rtos EXCLUDE_FROM_ALL)
 
-if(${CMAKE_CROSSCOMPILING})
-    # TODO: remove this now
-    target_link_libraries(mbed-core-obj PRIVATE ${MBED_TARGET_CONVERTED}-core)
-endif()
+# Add target includes to core (cmsis.h/device.h/object.h are required by core files)
+target_include_directories(mbed-core-obj PRIVATE $<TARGET_PROPERTY:${MBED_TARGET_CONVERTED},INTERFACE_INCLUDE_DIRECTORIES>)
+# Add target sources - these depend on mbed-core thus they are copied and compiled as part of mbed-core object library
+target_sources(mbed-core-obj PRIVATE $<TARGET_PROPERTY:${MBED_TARGET_CONVERTED},INTERFACE_SOURCES>)
+
 
 #
 # Converts output file of `target` to binary file and to Intel HEX file.
