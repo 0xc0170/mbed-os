@@ -22,23 +22,24 @@ if(${CMAKE_CROSSCOMPILING})
                 set(STARTUP_RTX_FILE TARGET_RTOS_M4_M7/irq_cm4f.S)
             endif()
 
-            target_sources(mbed-rtos
-                INTERFACE
-                    Source/${toolchain_dir}/${STARTUP_RTX_FILE}
-            )
-        endforeach()
-    endfunction()
-    
-    function(_mbed_get_cortex_a_exception_handlers)
-        foreach(key ${MBED_TARGET_LABELS})
-            if(${key} STREQUAL CORTEX_A)
-                target_sources(mbed-rtos INTERFACE Config/TARGET_CORTEX_A/handlers.c)
-            endif()
-        endforeach()
-    endfunction()
-    
-    _mbed_get_cortex_a_exception_handlers()
-    
+        target_sources(mbed-os-obj
+            PRIVATE
+                Source/${toolchain_dir}/${STARTUP_RTX_FILE}
+        )
+    endforeach()
+endfunction()
+
+function(_mbed_get_cortex_a_exception_handlers)
+    foreach(key ${MBED_TARGET_LABELS})
+        if(${key} STREQUAL CORTEX_A)
+            target_sources(mbed-os-obj PRIVATE Config/TARGET_CORTEX_A/handlers.c)
+        endif()
+    endforeach()
+endfunction()
+
+_mbed_get_cortex_a_exception_handlers()
+
+if(${MBED_TOOLCHAIN} STREQUAL "GCC_ARM")
     _mbed_get_cortex_m_exception_handlers(TOOLCHAIN_GCC)
 endif()
 
@@ -50,7 +51,7 @@ target_include_directories(mbed-rtos
         Source
 )
 
-target_sources(mbed-rtos-obj
+target_sources(mbed-os-obj
     PRIVATE
         Config/RTX_Config.c
 

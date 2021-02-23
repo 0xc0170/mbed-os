@@ -40,6 +40,13 @@ foreach(options COMPILE_DEFINITIONS COMPILE_FEATURES COMPILE_OPTIONS INCLUDE_DIR
 endforeach()
 
 add_library(mbed-os INTERFACE)
+add_library(mbed-os-obj OBJECT EXCLUDE_FROM_ALL)
+
+set_property(TARGET mbed-os PROPERTY INTERFACE_SOURCES $<TARGET_OBJECTS:mbed-os-obj>)
+
+foreach(options COMPILE_DEFINITIONS COMPILE_FEATURES COMPILE_OPTIONS INCLUDE_DIRECTORIES LINK_LIBRARIES)
+    set_target_properties(mbed-os-obj PROPERTIES ${options} $<TARGET_PROPERTY:mbed-os,INTERFACE_${options}>)
+endforeach()
 
 target_link_libraries(mbed-os
     INTERFACE
@@ -53,7 +60,9 @@ add_library(mbed-baremetal INTERFACE)
 target_link_libraries(mbed-baremetal
     INTERFACE
         mbed-core
+        ${MBED_TARGET_CONVERTED}
 )
+
 # Validate selected C library type
 # The C library type selected has to match the library that the target can support
 if(${CMAKE_CROSSCOMPILING})
@@ -153,9 +162,9 @@ target_include_directories(mbed-core
 # by libraries that depend on them.
 # TODO CMake: Should the source files be moved?
 add_library(mbed-device_key INTERFACE)
+
 add_library(mbed-rtos INTERFACE)
 add_library(mbed-rtos-obj OBJECT)
-
 
 set_property(TARGET mbed-rtos PROPERTY INTERFACE_SOURCES $<TARGET_OBJECTS:mbed-rtos-obj>)
 
@@ -181,7 +190,12 @@ add_subdirectory(cmsis/CMSIS_5/CMSIS/RTOS2 EXCLUDE_FROM_ALL)
 add_subdirectory(cmsis/device/rtos EXCLUDE_FROM_ALL)
 
 if(${CMAKE_CROSSCOMPILING})
-    target_link_libraries(mbed-core-obj PRIVATE ${MBED_TARGET_CONVERTED})
+    #target_link_libraries(mbed-core-obj PRIVATE ${MBED_TARGET_CONVERTED})
+    set_property(TARGET mbed-core-obj PROPERTY INTERFACE_SOURCES $<TARGET_OBJECTS:${MBED_TARGET_CONVERTED}>)
+
+    foreach(options COMPILE_DEFINITIONS COMPILE_FEATURES COMPILE_OPTIONS INCLUDE_DIRECTORIES LINK_LIBRARIES)
+        set_target_properties(mbed-core-obj PROPERTIES ${options} $<TARGET_PROPERTY:${MBED_TARGET_CONVERTED},INTERFACE_${options}>)
+    endforeach()
 endif()
 
 #
