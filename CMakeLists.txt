@@ -24,6 +24,12 @@ if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME AND BUILD_TESTING)
     add_subdirectory(UNITTESTS)
 endif()
 
+# Ensure the words that make up the Mbed target name are separated with a hyphen, lowercase, and with the `mbed-` prefix.
+set(MBED_TARGET_CONVERTED "" CACHE STRING "" FORCE)
+string(TOLOWER ${MBED_TARGET} MBED_TARGET_CONVERTED)
+string(REPLACE "_" "-" MBED_TARGET_CONVERTED ${MBED_TARGET_CONVERTED})
+string(PREPEND MBED_TARGET_CONVERTED "mbed-")
+
 add_library(mbed-core INTERFACE)
 add_library(mbed-core-obj OBJECT)
 
@@ -39,6 +45,7 @@ target_link_libraries(mbed-os
     INTERFACE
         mbed-rtos
         mbed-core
+        ${MBED_TARGET_CONVERTED}
 )
 
 add_library(mbed-baremetal INTERFACE)
@@ -174,11 +181,6 @@ add_subdirectory(cmsis/CMSIS_5/CMSIS/RTOS2 EXCLUDE_FROM_ALL)
 add_subdirectory(cmsis/device/rtos EXCLUDE_FROM_ALL)
 
 if(${CMAKE_CROSSCOMPILING})
-    # Ensure the words that make up the Mbed target name are separated with a hyphen, lowercase, and with the `mbed-` prefix.
-    string(TOLOWER ${MBED_TARGET} MBED_TARGET_CONVERTED)
-    string(REPLACE "_" "-" MBED_TARGET_CONVERTED ${MBED_TARGET_CONVERTED})
-    string(PREPEND MBED_TARGET_CONVERTED "mbed-")
-
     target_link_libraries(mbed-core-obj PRIVATE ${MBED_TARGET_CONVERTED})
 endif()
 
