@@ -2,23 +2,20 @@
 # SPDX-License-Identifier: Apache-2.0
 
 
-include(${MBED_PATH}/tools/cmake/util.cmake)
-
 if(NOT ${CMAKE_CROSSCOMPILING})
     add_subdirectory(tests/UNITTESTS)
 else()
-add_library(mbed-events INTERFACE)
-add_library(mbed-events-obj OBJECT)
+add_library(mbed-events OBJECT)
 
 target_include_directories(mbed-events
-    INTERFACE
+    PUBLIC
         .
         ./include
         ./include/events
         ./include/events/internal
 )
 
-target_sources(mbed-events-obj
+target_sources(mbed-events
     PRIVATE
         source/EventQueue.cpp
         source/equeue.c
@@ -28,11 +25,9 @@ target_sources(mbed-events-obj
 )
 
 target_compile_definitions(mbed-events
-    INTERFACE
+    PUBLIC
         MBED_CONF_EVENTS_PRESENT=1
 )
 endif()
 
-mbed_attach_object_lib_with_interface_lib(mbed-events)
-
-target_link_libraries(mbed-events-obj PRIVATE mbed-core)
+target_link_libraries(mbed-events PRIVATE mbed-core)
