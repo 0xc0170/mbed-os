@@ -36,7 +36,7 @@ add_library(mbed-core-obj OBJECT EXCLUDE_FROM_ALL)
 add_library(mbed-os INTERFACE)
 add_library(mbed-os-obj OBJECT EXCLUDE_FROM_ALL)
 
-target_sources(mbed-os INTERFACE $<TARGET_OBJECTS:mbed-os-obj>)
+target_sources(mbed-os INTERFACE $<TARGET_OBJECTS:mbed-os-obj> $<TARGET_OBJECTS:mbed-rtos-obj>)
 
 target_link_libraries(mbed-os
     INTERFACE
@@ -156,7 +156,7 @@ add_library(mbed-device_key INTERFACE)
 add_library(mbed-rtos INTERFACE)
 add_library(mbed-rtos-obj OBJECT)
 
-mbed_attach_object_lib_with_interface_lib(mbed-rtos)
+target_link_libraries(mbed-rtos-obj mbed-rtos mbed-core)
 
 add_subdirectory(cmsis)
 add_subdirectory(drivers)
