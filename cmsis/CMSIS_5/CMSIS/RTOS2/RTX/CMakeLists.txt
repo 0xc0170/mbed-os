@@ -22,7 +22,7 @@ if(${CMAKE_CROSSCOMPILING})
                 set(STARTUP_RTX_FILE TARGET_RTOS_M4_M7/irq_cm4f.S)
             endif()
 
-        target_sources(mbed-os-obj
+        target_sources(mbed-os-objects
             PRIVATE
                 Source/${toolchain_dir}/${STARTUP_RTX_FILE}
         )
@@ -32,7 +32,7 @@ endfunction()
 function(_mbed_get_cortex_a_exception_handlers)
     foreach(key ${MBED_TARGET_LABELS})
         if(${key} STREQUAL CORTEX_A)
-            target_sources(mbed-os-obj PRIVATE Config/TARGET_CORTEX_A/handlers.c)
+            target_sources(mbed-os-objects PRIVATE Config/TARGET_CORTEX_A/handlers.c)
         endif()
     endforeach()
 endfunction()
@@ -51,7 +51,7 @@ target_include_directories(mbed-rtos
         Source
 )
 
-target_sources(mbed-os-obj
+target_sources(mbed-os-objects
     PRIVATE
         Config/RTX_Config.c
 
