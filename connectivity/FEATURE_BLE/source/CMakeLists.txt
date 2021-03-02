@@ -13,16 +13,11 @@ target_include_directories(mbed-ble
 )
 
 target_sources(mbed-ble
-    INTERFACE
+    PRIVATE
         BLE.cpp
         Gap.cpp
         GattClient.cpp
         GattServer.cpp
         SecurityManager.cpp
         common/ble_trace_helpers.cpp
-)
-
-target_link_libraries(mbed-ble
-    INTERFACE
-        mbed-ble-cordio
 )

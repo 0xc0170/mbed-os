@@ -3,15 +3,14 @@
 
 # List of all connectivity libraries available.
 add_library(mbed-802.15.4-rf INTERFACE)
-add_library(mbed-ble INTERFACE)
-add_library(mbed-ble-cordio INTERFACE)
-add_library(mbed-ble-cordio_ll INTERFACE)
+
 add_library(mbed-cellular INTERFACE)
 add_library(mbed-coap INTERFACE)
 add_library(mbed-emac INTERFACE)
 add_library(mbed-lorawan INTERFACE)
 add_library(mbed-lwipstack INTERFACE)
 add_library(mbed-mbedtls INTERFACE)
+add_library(mbed-mbedtls-cryptocell310 INTERFACE)
 add_library(mbed-nanostack INTERFACE)
 add_library(mbed-nanostack-coap_service INTERFACE)
 add_library(mbed-nanostack-mbed_mesh_api INTERFACE)
