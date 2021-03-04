@@ -88,4 +88,3 @@ mbed_post_build_psoc6_sign_image(
     "16"
     "${CMAKE_CURRENT_SOURCE_DIR}/device/COMPONENT_CM4/hex/psoc6_02_cm0p_secure.hex"
 )
-
