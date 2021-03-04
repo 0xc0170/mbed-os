@@ -1,9 +1,9 @@
 # Copyright (c) 2020 ARM Limited. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
 
-if("MCU_NRF52840" IN_LIST MBED_TARGET_LABELS)
-    add_subdirectory(TARGET_MCU_NRF52840)
-endif()
+add_library(mbed-mbedtls-cryptocell310 INTERFACE)
+
+add_subdirectory(TARGET_MCU_NRF52840)
 
 add_subdirectory(binaries)
 
