@@ -5,21 +5,23 @@ if(NOT ${CMAKE_CROSSCOMPILING})
     add_subdirectory(tests/UNITTESTS)
 endif()
 
+add_library(mbed-netsocket OBJECT)
+
 # TODO CMake: Perhaps move this/these file(s) into connectivity/drivers/cellular
 target_sources(mbed-cellular
-    INTERFACE
+    PRIVATE
         source/CellularNonIPSocket.cpp
 )
 
 target_include_directories(mbed-netsocket
-    INTERFACE
+    PUBLIC
         .
         ./include
         ./include/netsocket
 )
 
 target_sources(mbed-netsocket
-    INTERFACE
+    PRIVATE
         source/DTLSSocket.cpp
         source/DTLSSocketWrapper.cpp
         source/EMACInterface.cpp
@@ -45,26 +47,22 @@ target_sources(mbed-netsocket
 )
 
 target_compile_definitions(mbed-netsocket
-    INTERFACE
+    PUBLIC
         MBED_CONF_NSAPI_PRESENT=1
 )
 
 target_link_libraries(mbed-netsocket
-    INTERFACE
+    PRIVATE
         mbed-mbedtls
         mbed-lwipstack
         mbed-events
 )
 
-if("DEVICE_EMAC=1" IN_LIST MBED_TARGET_DEFINITIONS)
-    target_link_libraries(mbed-netsocket
-        INTERFACE
-            mbed-emac
-    )
-endif()
 
 target_link_libraries(mbed-netsocket
-    INTERFACE
-        mbed-cellular
+    PRIVATE
         mbed-nanostack-libservice
+        mbed-core
+        mbed-rtos
+        ${MBED_NETSOCKET_EXTRA_LIBRARIES}
 )
