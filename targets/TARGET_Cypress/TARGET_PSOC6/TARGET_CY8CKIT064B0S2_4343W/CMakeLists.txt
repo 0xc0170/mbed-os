@@ -89,5 +89,3 @@ mbed_post_build_psoc6_sign_image(
     "${CMAKE_CURRENT_SOURCE_DIR}/device/COMPONENT_CM4/hex/psoc6_02_cm0p_secure.hex"
 )
 
-set(MBED_BLE_EXTRA_LIBRARIES ${MBED_BLE_EXTRA_LIBRARIES} mbed-ble-cyw43xxx-4343w mbed-ble-cyw43xxx mbed-ble-cyw43xxx-psoc6 CACHE INTERNAL "")
-

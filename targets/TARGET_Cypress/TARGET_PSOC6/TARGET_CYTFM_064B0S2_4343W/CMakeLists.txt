@@ -81,5 +81,3 @@ mbed_post_build_psoc6_sign_image(
     "16"
     ${CMAKE_CURRENT_SOURCE_DIR}/COMPONENT_TFM_S_FW/tfm_s.hex
 )
-
-set(MBED_BLE_EXTRA_LIBRARIES ${MBED_BLE_EXTRA_LIBRARIES}  mbed-ble-cyw43xxx-4343w mbed-ble-cyw43xxx-psoc6 CACHE INTERNAL "")
