@@ -1,8 +1,6 @@
 # Copyright (c) 2020 ARM Limited. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
 
-include(${MBED_PATH}/tools/cmake/components.cmake)
-
 add_subdirectory(TARGET_STM32WB10xC EXCLUDE_FROM_ALL)
 add_subdirectory(TARGET_STM32WB15xC EXCLUDE_FROM_ALL)
 add_subdirectory(TARGET_STM32WB30xE EXCLUDE_FROM_ALL)
@@ -36,4 +34,5 @@ target_sources(mbed-stm32wb
 )
 
 target_link_libraries(mbed-stm32wb INTERFACE mbed-stm mbed-stm32wbcube-fw)
-mbed_add_component_libraries(mbed-ble mbed-ble-stm32wb)
+
+set(MBED_BLE_EXTRA_LIBRARIES ${MBED_BLE_EXTRA_LIBRARIES} mbed-ble-stm32wb CACHE INTERNAL "")
