@@ -1,6 +1,8 @@
 # Copyright (c) 2020 ARM Limited. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
 
+add_library(mbed-cellular OBJECT)
+
 if(NOT ${CMAKE_CROSSCOMPILING})
     add_subdirectory(tests/UNITTESTS)
 endif()
@@ -8,7 +10,7 @@ endif()
 add_subdirectory(source/framework)
 
 target_include_directories(mbed-cellular
-    INTERFACE
+    PUBLIC
         .
         ./include
         ./include/cellular
@@ -20,12 +22,8 @@ target_include_directories(mbed-cellular
 )
 
 target_compile_definitions(mbed-cellular
-    INTERFACE
+    PUBLIC
         MBED_CONF_CELLULAR_PRESENT=1
 )
 
-target_link_libraries(mbed-cellular
-    INTERFACE
-        mbed-netsocket
-        mbed-core
-)
+target_link_libraries(mbed-cellular mbed-netsocket mbed-core)
