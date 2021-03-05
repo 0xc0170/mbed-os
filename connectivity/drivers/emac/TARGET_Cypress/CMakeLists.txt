@@ -4,3 +4,7 @@
 if("SCL" IN_LIST MBED_TARGET_LABELS)
     add_subdirectory(COMPONENT_SCL)
 endif()
+
+if("WHD" IN_LIST MBED_TARGET_LABELS)
+    add_subdirectory(COMPONENT_WHD)
+endif()
