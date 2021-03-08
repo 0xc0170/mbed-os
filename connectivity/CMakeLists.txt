@@ -27,7 +27,7 @@ if(${CMAKE_CROSSCOMPILING})
     # The directories below contain optional target libraries
     add_subdirectory(FEATURE_BLE EXCLUDE_FROM_ALL)
     add_subdirectory(cellular EXCLUDE_FROM_ALL)
-    add_subdirectory(drivers EXCLUDE_FROM_ALL)
+
     add_subdirectory(libraries EXCLUDE_FROM_ALL)
     add_subdirectory(lorawan EXCLUDE_FROM_ALL)
     add_subdirectory(lwipstack EXCLUDE_FROM_ALL)
@@ -35,6 +35,7 @@ if(${CMAKE_CROSSCOMPILING})
     add_subdirectory(nanostack EXCLUDE_FROM_ALL)
     add_subdirectory(netsocket EXCLUDE_FROM_ALL)
     add_subdirectory(nfc EXCLUDE_FROM_ALL)
+    add_subdirectory(drivers EXCLUDE_FROM_ALL)
 else()
     # Add these subdirectories for the Unit test
     add_subdirectory(cellular)
