@@ -61,4 +61,5 @@ target_link_libraries(mbed-netsocket
         mbed-mbedtls
         mbed-lwipstack
         mbed-nanostack-libservice
+        mbed-ppp
 )
