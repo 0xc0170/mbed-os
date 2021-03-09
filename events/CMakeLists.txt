@@ -1,11 +1,10 @@
 # Copyright (c) 2020 ARM Limited. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
 
-
 if(NOT ${CMAKE_CROSSCOMPILING})
     add_subdirectory(tests/UNITTESTS)
 else()
-add_library(mbed-events OBJECT)
+add_library(mbed-events STATIC)
 
 target_include_directories(mbed-events
     PUBLIC
