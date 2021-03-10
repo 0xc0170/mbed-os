@@ -2,7 +2,6 @@
 # SPDX-License-Identifier: Apache-2.0
 
 add_library(mbed-802.15.4-rf INTERFACE)
-add_library(mbed-lorawan INTERFACE)
 add_library(mbed-wifi INTERFACE)
 
 if(${CMAKE_CROSSCOMPILING})
