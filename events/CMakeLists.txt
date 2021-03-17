@@ -3,6 +3,8 @@
 
 add_library(mbed-events INTERFACE)
 
+add_subdirectory(tests/TESTS/events EXCLUDE_FROM_ALL)
+
 target_include_directories(mbed-events
     INTERFACE
         .

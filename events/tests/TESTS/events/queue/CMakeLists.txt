@@ -4,7 +4,7 @@
 cmake_minimum_required(VERSION 3.19.0 FATAL_ERROR)
 
 set(MBED_PATH ${CMAKE_CURRENT_SOURCE_DIR}/../../../../.. CACHE INTERNAL "")
-set(TEST_TARGET mbed-events-queue)
+set(TEST_TARGET mbed-events-test-queue)
 
 include(${MBED_PATH}/tools/cmake/mbed_greentea.cmake)
 
@@ -14,3 +14,5 @@ mbed_greentea_add_test(
     TEST_NAME ${TEST_TARGET}
     TEST_REQUIRED_LIBS mbed-events
 )
+
+add_test(${TEST_TARGET} main.cpp)

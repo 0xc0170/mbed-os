@@ -108,6 +108,9 @@ target_include_directories(mbed-core
         ${CMAKE_CURRENT_SOURCE_DIR}
 )
 
+# Enable testing prior any subdirectory
+include(CTest)
+
 # These targets are made visible here so their source files which
 # are spread in different directories can be referenced and can be linked against
 # by libraries that depend on them.
