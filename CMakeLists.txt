@@ -110,7 +110,6 @@ target_include_directories(mbed-core
 
 # Enable testing prior any subdirectory
 include(CTest)
-enable_testing()
 
 # These targets are made visible here so their source files which
 # are spread in different directories can be referenced and can be linked against
