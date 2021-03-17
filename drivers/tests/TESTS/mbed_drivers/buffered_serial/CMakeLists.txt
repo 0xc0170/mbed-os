@@ -11,3 +11,4 @@ include(${MBED_PATH}/tools/cmake/mbed_greentea.cmake)
 project(${TEST_TARGET})
 
 mbed_greentea_add_test(TEST_NAME ${TEST_TARGET})
+add_test(${TEST_TARGET} main.cpp)

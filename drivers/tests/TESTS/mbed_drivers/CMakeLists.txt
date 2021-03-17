@@ -1,0 +1,27 @@
+# Copyright (c) 2020 ARM Limited. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
+
+add_subdirectory(buffered_serial EXCLUDE_FROM_ALL)
+add_subdirectory(c_strings EXCLUDE_FROM_ALL)
+add_subdirectory(crc EXCLUDE_FROM_ALL)
+add_subdirectory(dev_null EXCLUDE_FROM_ALL)
+add_subdirectory(echo EXCLUDE_FROM_ALL)
+add_subdirectory(flashiap EXCLUDE_FROM_ALL)
+add_subdirectory(generic_tests EXCLUDE_FROM_ALL)
+add_subdirectory(lp_ticker EXCLUDE_FROM_ALL)
+add_subdirectory(lp_timeout EXCLUDE_FROM_ALL)
+add_subdirectory(lp_timer EXCLUDE_FROM_ALL)
+add_subdirectory(mem_trace EXCLUDE_FROM_ALL)
+add_subdirectory(race_test EXCLUDE_FROM_ALL)
+add_subdirectory(reset_reason EXCLUDE_FROM_ALL)
+add_subdirectory(rtc EXCLUDE_FROM_ALL)
+add_subdirectory(sleep_lock EXCLUDE_FROM_ALL)
+add_subdirectory(stl_features EXCLUDE_FROM_ALL)
+add_subdirectory(ticker EXCLUDE_FROM_ALL)
+add_subdirectory(timeout EXCLUDE_FROM_ALL)
+add_subdirectory(timer EXCLUDE_FROM_ALL)
+add_subdirectory(timerevent EXCLUDE_FROM_ALL)
+add_subdirectory(unbuffered_serial EXCLUDE_FROM_ALL)
+add_subdirectory(watchdog EXCLUDE_FROM_ALL)
+add_subdirectory(watchdog_reset EXCLUDE_FROM_ALL)
+
